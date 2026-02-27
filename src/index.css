@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 20% 98%;
+    --foreground: 220 30% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 15%;
+
+    --primary: 215 45% 22%;
+    --primary-foreground: 40 20% 98%;
+
+    --secondary: 40 30% 95%;
+    --secondary-foreground: 215 45% 22%;
+
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 38 65% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 215 45% 22%;
+
+    --radius: 0.75rem;
+
+    --gold: 38 65% 52%;
+    --gold-light: 40 60% 70%;
+    --navy: 215 45% 22%;
+    --navy-light: 215 35% 35%;
+    --cream: 40 30% 95%;
+    --warm-gray: 30 8% 60%;
+  }
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  .container-narrow {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, hsl(38 65% 52%), hsl(40 60% 70%));
+  }
+
+  .navy-gradient {
+    background: linear-gradient(135deg, hsl(215 45% 22%), hsl(215 35% 35%));
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(38 65% 52%), hsl(40 60% 70%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50 rounded-xl shadow-lg;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  .cta-glow {
+    position: relative;
+    animation: cta-pulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 25px hsl(38 65% 52% / 0.6), 0 0 60px hsl(38 65% 52% / 0.4), 0 0 100px hsl(38 65% 52% / 0.2), 0 0 140px hsl(38 65% 52% / 0.1);
+  }
+
+  .cta-glow:hover {
+    box-shadow: 0 0 40px hsl(38 65% 52% / 0.8), 0 0 80px hsl(38 65% 52% / 0.5), 0 0 120px hsl(38 65% 52% / 0.3), 0 0 160px hsl(38 65% 52% / 0.15);
+  }
+
+  @keyframes cta-pulse {
+    0%, 100% {
+      box-shadow: 0 0 25px hsl(38 65% 52% / 0.6), 0 0 60px hsl(38 65% 52% / 0.4), 0 0 100px hsl(38 65% 52% / 0.2), 0 0 140px hsl(38 65% 52% / 0.1);
+    }
+    50% {
+      box-shadow: 0 0 45px hsl(38 65% 52% / 0.85), 0 0 90px hsl(38 65% 52% / 0.55), 0 0 130px hsl(38 65% 52% / 0.35), 0 0 180px hsl(38 65% 52% / 0.2);
+    }
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+@keyframes spin-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}
