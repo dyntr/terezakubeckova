@@ -43,7 +43,22 @@ React 18 + TypeScript · Vite · Tailwind CSS · shadcn/ui (Radix primitives) ·
 ```bash
 npm install
 npm run dev      # local dev server
+npm test         # unit tests (Vitest)
 npm run build    # production build → dist/
+```
+
+## 🔄 Deploy
+
+Every push to `main` triggers the **Deploy to Cloudflare Pages** GitHub Action
+(`.github/workflows/deploy.yml`): install → test → build → `wrangler pages deploy dist`
+to the Cloudflare Pages project **`terezakubeckova`**. No manual steps needed —
+merge to `main` and the site goes live at [terezakubeckova.cz](https://terezakubeckova.cz).
+
+Manual fallback (needs `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in env):
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=terezakubeckova --branch=main
 ```
 
 ## 🚀 Status

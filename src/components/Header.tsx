@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 import TKLogo from "./TKLogo";
+import { scrollToId } from "@/lib/scroll";
 
 const navItems = [
   { label: "Úvod", href: "#hero" },
@@ -17,6 +19,8 @@ const navItems = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -26,8 +30,17 @@ const Header = () => {
 
   const scrollTo = (href: string) => {
     setIsMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    const id = href.replace(/^#/, "");
+    // On sub-pages (e.g. /gdpr, /cookies) the target sections don't exist, so
+    // navigate home with the hash; Index reads it and scrolls after mount.
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`);
+      return;
+    }
+    // Defer the scroll until after React commits the menu-close re-render,
+    // otherwise the state update + exit animation cancels the smooth scroll
+    // (the bug that made the mobile menu feel "broken").
+    requestAnimationFrame(() => scrollToId(id));
   };
 
   return (
@@ -35,7 +48,7 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "bg-card/95 backdrop-blur-md shadow-lg border-b border-border/50"
-          : "bg-transparent"
+          : "bg-card/90 backdrop-blur-md border-b border-border/40"
       }`}
     >
       <div className="container-narrow mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
@@ -82,9 +95,9 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-card backdrop-blur-lg border-b border-border"
+            className="lg:hidden bg-card backdrop-blur-lg border-b border-border overflow-hidden"
           >
-            <nav className="flex flex-col px-6 py-4 gap-1">
+            <nav className="flex flex-col px-6 py-4 gap-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <button
                   key={item.href}
