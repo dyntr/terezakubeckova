@@ -10,7 +10,7 @@ import {
   PiggyBank,
   ScaleIcon,
   ShieldCheck,
-  Quote,
+  Check,
 } from "lucide-react";
 import TKLogo from "@/components/TKLogo";
 import Footer from "@/components/Footer";
@@ -29,31 +29,59 @@ const auditPoints = [
   {
     icon: Calculator,
     title: "Simulace mateřské",
-    text: "Spočítáme, jak bude váš rozpočet vypadat s výpadkem jednoho platu — reálně, ne podle bankovní kalkulačky.",
+    text: "Spočítáme do koruny, jak bude vypadat váš rozpočet v den, kdy z výplaty zbyde jen rodičovský příspěvek. Ne podle bankovní kalkulačky – podle reality.",
   },
   {
     icon: PiggyBank,
     title: "Zajištění dítěte",
-    text: "Ukážeme vám, jak nastavit rozpočet tak, aby vám zbylo 1–2 tisíce měsíčně na moderní spoření pro dítě (DIP).",
+    text: "Najdeme ve vašem rozpočtu 1–2 tisíce měsíčně, které místo bankovních poplatků porostou dítěti na účtu (DIP) a v 18 letech mu reálně pomůžou.",
   },
   {
     icon: ScaleIcon,
-    title: "Verdikt",
-    text: "Upřímně vám řekneme, zda do koupě jít teď, nebo je bezpečnější počkat.",
+    title: "Jasný verdikt",
+    text: "Na rovinu vám řekneme, zda do koupě jít letos, nebo je bezpečnější počkat. Bez omáček a bez tlaku něco podepsat.",
   },
 ];
 
-const questions = [
-  "Jak zvládneme hypotéku, až jeden z nás bude na rodičovské s pár tisícovkami měsíčně?",
-  "Nezbydou nám nakonec jen oči pro pláč a prázdný účet?",
-  "Z čeho budeme malému spořit na start do života (třeba přes DIP), když všechny peníze pohltí cihly?",
+const recognitionGroups = [
+  {
+    heading: "Byt a rozhodování",
+    items: [
+      "Byli jsme na prohlídce bytu. Cestou domů nastalo v autě ticho.",
+      "Malý byt teď, nebo rovnou větší nastálo – nechceme se stěhovat pětkrát.",
+      "Stěhovat se za levnějším bydlením, nebo zůstat a škrtit rozpočet?",
+    ],
+  },
+  {
+    heading: "Hypotéka na jeden plat",
+    items: [
+      "Banka nám hypotéku schválí z dnešních dvou platů. Co ale bude za rok, až jeden z nás bude na rodičovské?",
+      "Utáhneme splátku 30 000 Kč jen z jednoho platu?",
+      "Vydělávám víc než partner. Co bude s hypotékou, až půjdu na mateřskou?",
+    ],
+  },
+  {
+    heading: "Těhotenství a banka",
+    items: [
+      "Jsme těhotní a chceme žádat o hypotéku – musíme to před bankou tajit?",
+      "Refixace nám vychází přesně na termín porodu.",
+    ],
+  },
+  {
+    heading: "Rozpočet a děti",
+    items: [
+      "Vycházíme tak tak už teď. Zvládneme to i s miminkem navíc?",
+      "Kroužky a školy v přírodě se nezaplatí samy – zaplatíme je i s dalším dítětem na stejný plat?",
+      "Máme naspořeno 20 000 Kč měsíčně na papíře. Bude to stačit, až skutečně dojde na věc?",
+    ],
+  },
 ];
 
 const LepsiZivot = () => {
-  const painRef = useRef(null);
+  const recognitionRef = useRef(null);
   const auditRef = useRef(null);
   const formRef = useRef(null);
-  const painInView = useInView(painRef, { once: true, margin: "-100px" });
+  const recognitionInView = useInView(recognitionRef, { once: true, margin: "-100px" });
   const auditInView = useInView(auditRef, { once: true, margin: "-100px" });
   const formInView = useInView(formRef, { once: true, margin: "-100px" });
 
@@ -134,7 +162,7 @@ const LepsiZivot = () => {
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Hero — headline navazuje na hlavní kreativu kampaně */}
       <section className="relative overflow-hidden bg-primary">
         <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_80%_0%,hsl(215_35%_35%/0.6),transparent_60%)]" />
         <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
@@ -147,7 +175,7 @@ const LepsiZivot = () => {
             >
               <div className="h-px w-10 bg-accent" />
               <span className="text-xs md:text-sm font-medium text-accent tracking-wider uppercase">
-                Nezávislý Druhý názor pro rodiny
+                Nezávislý Druhý názor pro rodiny, co čekají miminko
               </span>
               <div className="h-px w-10 bg-accent" />
             </motion.div>
@@ -158,7 +186,7 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
-              Byli jste na prohlídce bytu a teď počítáte, jestli to s miminkem na cestě utáhnete?
+              Chcete do nového bydlení, ale děsí vás představa, že s miminkem na cestě přijdete o finanční jistotu?
             </motion.h1>
 
             <motion.p
@@ -167,8 +195,9 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Získejte během 3 minut nezávislý Druhý názor na to, zda je pro vaši rozrůstající se rodinu bezpečné
-              koupit vlastní bydlení letos, a jak u toho rovnou správně vyřešit budoucí spoření pro dítě.
+              Banka vám hypotéku klidně schválí z vašich dvou dnešních platů. Jenže ji nezajímá, co bude za rok, až
+              jeden z vás bude na rodičovské. Zjistěte během 3 minut, jestli to bezpečně utáhnete – a jak si u toho
+              rovnou nesáhnout na dno.
             </motion.p>
 
             <motion.div
@@ -180,53 +209,89 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-all active:scale-[0.98]"
               >
-                Chci nezávislý Druhý názor zdarma
+                Chci vědět, jestli to utáhneme
               </button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Pain section */}
-      <section className="section-padding bg-background" ref={painRef}>
-        <div className="container-narrow mx-auto max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={painInView ? { opacity: 1, y: 0 } : {}}
+      {/* Scéna z prohlídky bytu — krátký emoční úvod */}
+      <section className="section-padding bg-background pb-8 md:pb-10">
+        <div className="container-narrow mx-auto max-w-3xl text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="text-lg md:text-xl text-foreground leading-relaxed"
           >
-            <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8">
-              Ten byt se vám líbil. Už jste si představovali, kde bude stát postýlka. Jenže cestou domů v autě
-              nastalo ticho.
-            </p>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
-              V hlavě vám totiž běží matematika, kterou vám žádná bankovní kalkulačka nespočítá:
-            </p>
-
-            <div className="space-y-4 mb-8">
-              {questions.map((q, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={painInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.15 * (i + 1) }}
-                  className="glass-card p-5 flex items-start gap-3"
-                >
-                  <Quote size={18} className="text-accent mt-1 flex-shrink-0" />
-                  <p className="text-foreground font-medium leading-relaxed">{q}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            <p className="text-lg md:text-xl font-heading font-semibold text-foreground leading-relaxed">
-              Nehledejte „nejlevnější hypotéku“. Hledejte jistotu, že vaše rodina neskočí do pasti.
-            </p>
-          </motion.div>
+            Ten byt se vám líbil. Už jste si představovali, kde bude stát postýlka. Jenže cestou domů v autě nastalo
+            ticho — protože v hlavě vám běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá.
+          </motion.p>
         </div>
       </section>
 
-      {/* Rodinný audit bezpečnosti */}
-      <section className="section-padding bg-secondary" ref={auditRef}>
+      {/* "Poznáváte se?" — checklist, který zrcadlí konkrétní obavy z reklam */}
+      <section className="section-padding bg-secondary pt-8 md:pt-10" ref={recognitionRef}>
+        <div className="container-narrow mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10 md:mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              Poznáváte se v některé z těchto vět?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
+              Pokud ano, nejste sami. Tohle si v hlavě přehrává skoro každý pár, který čeká miminko a řeší bydlení.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+            {recognitionGroups.map((group, gi) => (
+              <motion.div
+                key={group.heading}
+                initial={{ opacity: 0, y: 30 }}
+                animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.1 * gi }}
+                className="glass-card p-6"
+              >
+                <h3 className="font-heading font-bold text-base text-accent mb-4">{group.heading}</h3>
+                <ul className="space-y-3">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <Check size={16} className="text-accent mt-1 flex-shrink-0" />
+                      <span className="text-sm sm:text-base text-foreground leading-relaxed">„{item}“</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pull quote — hlavní argument proč teď a proč nezávisle */}
+      <section className="bg-primary py-12 md:py-16">
+        <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground leading-snug"
+          >
+            Banka počítá s <span className="text-gradient-gold">dneškem</span>.
+            <br />
+            Vy musíte počítat s <span className="text-gradient-gold">příštím rokem</span>.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Rodinný audit bezpečnosti — mechanismus/nabídka */}
+      <section className="section-padding bg-background" ref={auditRef}>
         <div className="container-narrow mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -264,11 +329,20 @@ const LepsiZivot = () => {
               </motion.div>
             ))}
           </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={auditInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-center text-lg md:text-xl font-heading font-semibold text-foreground leading-relaxed mt-12 max-w-2xl mx-auto"
+          >
+            Nehledejte „nejlevnější hypotéku“. Hledejte jistotu, že vaše rodina neskočí do pasti.
+          </motion.p>
         </div>
       </section>
 
       {/* Lead form */}
-      <section id="druhy-nazor" className="section-padding bg-background" ref={formRef}>
+      <section id="druhy-nazor" className="section-padding bg-secondary" ref={formRef}>
         <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -281,7 +355,7 @@ const LepsiZivot = () => {
               <span className="text-sm font-medium text-accent tracking-wider uppercase">Nezávazné a zdarma</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Získejte svůj Druhý názor
+              Než cokoliv podepíšete, ověřte si to
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Vyplňte kontakt a ozvu se vám do 24 hodin. Na rovinu vám řeknu, jestli do koupě jít teď, nebo je
