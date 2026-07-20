@@ -45,10 +45,10 @@ const auditPoints = [
 
 const recognitionGroups = [
   {
-    heading: "Byt a rozhodování",
+    heading: "Bydlení a rozhodování",
     items: [
-      "Byli jsme na prohlídce bytu. Cestou domů nastalo v autě ticho.",
-      "Malý byt teď, nebo rovnou větší nastálo – nechceme se stěhovat pětkrát.",
+      "Byli jsme na prohlídce domu (nebo bytu). Cestou domů nastalo v autě ticho.",
+      "Menší bydlení teď, nebo rovnou větší nastálo – nechceme se stěhovat pětkrát.",
       "Stěhovat se za levnějším bydlením, nebo zůstat a škrtit rozpočet?",
     ],
   },
@@ -209,14 +209,17 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-all active:scale-[0.98]"
               >
-                Chci vědět, jestli to utáhneme
+                Chci vědět, jestli to utáhneme – zdarma
               </button>
+              <p className="mt-4 text-xs sm:text-sm text-primary-foreground/70">
+                100 % zdarma a bez závazků. Nic tím nekupujete ani neobjednáváte – jen si to nechte spočítat.
+              </p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Scéna z prohlídky bytu — krátký emoční úvod */}
+      {/* Scéna z prohlídky nemovitosti — krátký emoční úvod */}
       <section className="section-padding bg-background pb-8 md:pb-10">
         <div className="container-narrow mx-auto max-w-3xl text-center">
           <motion.p
@@ -226,8 +229,9 @@ const LepsiZivot = () => {
             transition={{ duration: 0.6 }}
             className="text-lg md:text-xl text-foreground leading-relaxed"
           >
-            Ten byt se vám líbil. Už jste si představovali, kde bude stát postýlka. Jenže cestou domů v autě nastalo
-            ticho — protože v hlavě vám běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá.
+            To bydlení se vám líbilo — dům se zahradou, nebo byt, ve kterém by se konečně narovnala záda. Už jste si
+            představovali, kde bude stát postýlka. Jenže cestou domů v autě nastalo ticho — protože v hlavě vám
+            běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá.
           </motion.p>
         </div>
       </section>
