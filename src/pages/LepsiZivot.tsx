@@ -19,6 +19,12 @@ const leadSchema = z.object({
 
 const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 const auditPoints = [
   {
     icon: Calculator,
@@ -120,6 +126,7 @@ const LepsiZivot = () => {
       });
 
       if (res.ok) {
+        window.fbq?.("track", "Lead");
         toast.success("Poptávka odeslána! Ozvu se Vám co nejdříve.");
         setForm({ name: "", email: "", phone: "" });
       } else {
