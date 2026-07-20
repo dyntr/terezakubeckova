@@ -168,7 +168,7 @@ const LepsiZivot = () => {
             >
               <div className="h-px w-10 bg-accent" />
               <span className="text-xs md:text-sm font-medium text-accent tracking-wider uppercase">
-                Pro těhotné maminky od matky dvou dětí
+                Pro těhotné maminky od mamky dvou dětí
               </span>
               <div className="h-px w-10 bg-accent" />
             </motion.div>
