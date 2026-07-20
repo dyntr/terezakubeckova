@@ -3,16 +3,11 @@ import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import {
-  Phone,
-  Send,
-  Calculator,
-  PiggyBank,
-  ScaleIcon,
-  ShieldCheck,
-  Check,
-} from "lucide-react";
+import { Send, Calculator, PiggyBank, ScaleIcon, ShieldCheck, Check } from "lucide-react";
 import TKLogo from "@/components/TKLogo";
+import ReviewsSection from "@/components/ReviewsSection";
+import CertificatesSection from "@/components/CertificatesSection";
+import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 
@@ -152,13 +147,12 @@ const LepsiZivot = () => {
               Tereza <span className="text-gradient-gold">Kubečková</span>
             </span>
           </Link>
-          <a
-            href="tel:+420775303314"
-            className="hidden sm:inline-flex items-center gap-2 navy-gradient text-primary-foreground px-4 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+          <button
+            onClick={scrollToForm}
+            className="hidden sm:inline-flex items-center gap-2 gold-gradient text-accent-foreground px-4 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
           >
-            <Phone size={16} />
-            775 303 314
-          </a>
+            Chci Druhý názor zdarma
+          </button>
         </div>
       </header>
 
@@ -209,15 +203,139 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-all active:scale-[0.98]"
               >
-                Chci vědět, jestli to utáhneme – zdarma
+                Chci Druhý názor zdarma
               </button>
-              <p className="mt-4 text-xs sm:text-sm text-primary-foreground/70">
-                100 % zdarma a bez závazků. Nic tím nekupujete ani neobjednáváte – jen si to nechte spočítat.
-              </p>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* Lead form — hned pod hlavním textem, ať to nemusí nikdo hledat */}
+      <section id="druhy-nazor" className="section-padding bg-background" ref={formRef}>
+        <div className="container-narrow mx-auto max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={formInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <ShieldCheck size={18} className="text-accent" />
+              <span className="text-sm font-medium text-accent tracking-wider uppercase">Nezávazné a zdarma</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              Než cokoliv podepíšete, ověřte si to
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
+              Vyplňte kontakt a ozvu se vám do 24 hodin. Na rovinu vám řeknu, jestli do koupě jít teď, nebo je
+              bezpečnější počkat.
+            </p>
+          </motion.div>
+
+          <motion.form
+            onSubmit={handleSubmit}
+            noValidate
+            initial={{ opacity: 0, y: 30 }}
+            animate={formInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="glass-card p-5 sm:p-8 space-y-4 sm:space-y-5"
+          >
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
+              <input
+                value={form.name}
+                onChange={(e) => update("name", e.target.value)}
+                className={inputClass}
+                placeholder="Jan Novák"
+              />
+              {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  className={inputClass}
+                  placeholder="jan@email.cz"
+                />
+                {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
+                <input
+                  value={form.phone}
+                  onChange={(e) => update("phone", e.target.value)}
+                  className={inputClass}
+                  placeholder="+420 xxx xxx xxx"
+                  inputMode="tel"
+                />
+                {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+              </div>
+            </div>
+
+            <label className="flex items-start gap-3 cursor-pointer group/gdpr">
+              <div className="relative mt-0.5 flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={form.gdpr}
+                  onChange={(e) => update("gdpr", e.target.checked)}
+                  className="sr-only"
+                />
+                <div
+                  className={`w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center group-hover/gdpr:border-accent/60 ${
+                    form.gdpr ? "bg-accent border-accent" : "border-border bg-background"
+                  }`}
+                >
+                  {form.gdpr && (
+                    <svg className="w-3 h-3 text-accent-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                Souhlasím se{" "}
+                <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                  zpracováním osobních údajů
+                </Link>{" "}
+                za účelem vyřízení poptávky.
+              </span>
+            </label>
+            {errors.gdpr && <p className="text-destructive text-xs -mt-2">{errors.gdpr}</p>}
+
+            <button
+              type="submit"
+              disabled={sending}
+              className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {sending ? (
+                <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+              ) : (
+                <Send size={20} />
+              )}
+              {sending ? "Odesílám…" : "Chci Druhý názor zdarma"}
+            </button>
+
+            <p className="text-center text-xs text-muted-foreground pt-1">
+              Nebo rovnou zavolejte:{" "}
+              <a href="tel:+420775303314" className="text-accent hover:underline font-medium">
+                775 303 314
+              </a>
+            </p>
+          </motion.form>
+        </div>
+      </section>
+
+      {/* Reference — hned pod formulářem, stejná sekce jako na hlavní stránce */}
+      <ReviewsSection />
+
+      {/* Partneři napříč trhem */}
+      <PartnersSection />
+
+      {/* Certifikace ČNB */}
+      <CertificatesSection />
 
       {/* Scéna z prohlídky nemovitosti — krátký emoční úvod */}
       <section className="section-padding bg-background pb-8 md:pb-10">
@@ -342,124 +460,6 @@ const LepsiZivot = () => {
           >
             Nehledejte „nejlevnější hypotéku“. Hledejte jistotu, že vaše rodina neskočí do pasti.
           </motion.p>
-        </div>
-      </section>
-
-      {/* Lead form */}
-      <section id="druhy-nazor" className="section-padding bg-secondary" ref={formRef}>
-        <div className="container-narrow mx-auto max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={formInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10"
-          >
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <ShieldCheck size={18} className="text-accent" />
-              <span className="text-sm font-medium text-accent tracking-wider uppercase">Nezávazné a zdarma</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Než cokoliv podepíšete, ověřte si to
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Vyplňte kontakt a ozvu se vám do 24 hodin. Na rovinu vám řeknu, jestli do koupě jít teď, nebo je
-              bezpečnější počkat.
-            </p>
-          </motion.div>
-
-          <motion.form
-            onSubmit={handleSubmit}
-            noValidate
-            initial={{ opacity: 0, y: 30 }}
-            animate={formInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-5 sm:p-8 space-y-4 sm:space-y-5"
-          >
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
-              <input
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-                className={inputClass}
-                placeholder="Jan Novák"
-              />
-              {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => update("email", e.target.value)}
-                  className={inputClass}
-                  placeholder="jan@email.cz"
-                />
-                {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
-                <input
-                  value={form.phone}
-                  onChange={(e) => update("phone", e.target.value)}
-                  className={inputClass}
-                  placeholder="+420 xxx xxx xxx"
-                  inputMode="tel"
-                />
-                {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
-              </div>
-            </div>
-
-            <label className="flex items-start gap-3 cursor-pointer group/gdpr">
-              <div className="relative mt-0.5 flex-shrink-0">
-                <input
-                  type="checkbox"
-                  checked={form.gdpr}
-                  onChange={(e) => update("gdpr", e.target.checked)}
-                  className="sr-only"
-                />
-                <div
-                  className={`w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center group-hover/gdpr:border-accent/60 ${
-                    form.gdpr ? "bg-accent border-accent" : "border-border bg-background"
-                  }`}
-                >
-                  {form.gdpr && (
-                    <svg className="w-3 h-3 text-accent-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </div>
-              </div>
-              <span className="text-xs text-muted-foreground leading-relaxed">
-                Souhlasím se{" "}
-                <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
-                  zpracováním osobních údajů
-                </Link>{" "}
-                za účelem vyřízení poptávky.
-              </span>
-            </label>
-            {errors.gdpr && <p className="text-destructive text-xs -mt-2">{errors.gdpr}</p>}
-
-            <button
-              type="submit"
-              disabled={sending}
-              className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {sending ? (
-                <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
-              ) : (
-                <Send size={20} />
-              )}
-              {sending ? "Odesílám…" : "Chci Druhý názor zdarma"}
-            </button>
-
-            <p className="text-center text-xs text-muted-foreground pt-1">
-              Nebo rovnou zavolejte:{" "}
-              <a href="tel:+420775303314" className="text-accent hover:underline font-medium">
-                775 303 314
-              </a>
-            </p>
-          </motion.form>
         </div>
       </section>
 
