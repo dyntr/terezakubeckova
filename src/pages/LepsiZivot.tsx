@@ -175,7 +175,7 @@ const LepsiZivot = () => {
             >
               <div className="h-px w-10 bg-accent" />
               <span className="text-xs md:text-sm font-medium text-accent tracking-wider uppercase">
-                Nezávislý Druhý názor pro rodiny, co čekají miminko
+                Pro těhotné maminky od matky dvou dětí
               </span>
               <div className="h-px w-10 bg-accent" />
             </motion.div>
@@ -186,7 +186,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
-              Chcete do nového bydlení, ale děsí vás představa, že s miminkem na cestě přijdete o finanční jistotu?
+              Máte za sebou prohlídku nového bydlení, cítíte, že by to mohl být váš nový{" "}
+              <span className="text-gradient-gold italic">domov</span>, ale je to správný krok?
             </motion.h1>
 
             <motion.p
@@ -195,9 +196,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Banka vám hypotéku klidně schválí z vašich dvou dnešních platů. Jenže ji nezajímá, co bude za rok, až
-              jeden z vás bude na rodičovské. Zjistěte během 3 minut, jestli to bezpečně utáhnete – a jak si u toho
-              rovnou nesáhnout na dno.
+              Znám to taky, cítila jsem se stejně a jediné, co jsem potřebovala, byl druhý názor. Dnes vám ho
+              nabízím <span className="text-accent font-semibold">zdarma</span>.
             </motion.p>
 
             <motion.div
