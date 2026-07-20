@@ -140,17 +140,18 @@ const LepsiZivot = () => {
       {/* Minimal header — no nav, aby nic neodvádělo pozornost od poptávky */}
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
         <div className="container-narrow mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2.5">
-            <TKLogo className="w-8 h-8 text-accent" />
-            <span className="font-heading text-lg md:text-xl font-semibold text-foreground">
-              Tereza <span className="text-gradient-gold">Kubečková</span>
+          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <TKLogo className="w-7 h-7 sm:w-8 sm:h-8 text-accent flex-shrink-0" />
+            <span className="font-heading text-base sm:text-lg md:text-xl font-semibold text-foreground truncate">
+              Tereza <span className="hidden sm:inline text-gradient-gold">Kubečková</span>
             </span>
           </Link>
           <button
             onClick={scrollToForm}
-            className="hidden sm:inline-flex items-center gap-2 gold-gradient text-accent-foreground px-4 py-2.5 rounded-lg text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
+            className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
-            Chci Druhý názor zdarma
+            <span className="sm:hidden">Poptávka</span>
+            <span className="hidden sm:inline">Chci Druhý názor zdarma</span>
           </button>
         </div>
       </header>
@@ -245,7 +246,7 @@ const LepsiZivot = () => {
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
                 className={inputClass}
-                placeholder="Jan Novák"
+                placeholder="Jana Nováková"
               />
               {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
             </div>
@@ -257,7 +258,7 @@ const LepsiZivot = () => {
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
                   className={inputClass}
-                  placeholder="jan@email.cz"
+                  placeholder="jana@email.cz"
                 />
                 {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
               </div>
