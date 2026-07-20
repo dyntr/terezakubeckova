@@ -15,7 +15,6 @@ const leadSchema = z.object({
   name: z.string().trim().min(1, "Vyplňte jméno").max(100),
   email: z.string().trim().email("Zadejte platný e-mail").max(255),
   phone: z.string().trim().min(9, "Zadejte platné číslo").max(20),
-  gdpr: z.literal(true, { errorMap: () => ({ message: "Musíte souhlasit se zpracováním údajů" }) }),
 });
 
 const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
@@ -80,11 +79,11 @@ const LepsiZivot = () => {
   const auditInView = useInView(auditRef, { once: true, margin: "-100px" });
   const formInView = useInView(formRef, { once: true, margin: "-100px" });
 
-  const [form, setForm] = useState({ name: "", email: "", phone: "", gdpr: false as boolean });
+  const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
 
-  const update = (field: string, value: string | boolean) => {
+  const update = (field: string, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
     if (errors[field]) setErrors((e) => ({ ...e, [field]: "" }));
   };
@@ -122,7 +121,7 @@ const LepsiZivot = () => {
 
       if (res.ok) {
         toast.success("Poptávka odeslána! Ozvu se Vám co nejdříve.");
-        setForm({ name: "", email: "", phone: "", gdpr: false });
+        setForm({ name: "", email: "", phone: "" });
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -149,7 +148,7 @@ const LepsiZivot = () => {
           </Link>
           <button
             onClick={scrollToForm}
-            className="hidden sm:inline-flex items-center gap-2 gold-gradient text-accent-foreground px-4 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+            className="hidden sm:inline-flex items-center gap-2 gold-gradient text-accent-foreground px-4 py-2.5 rounded-lg text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
             Chci Druhý názor zdarma
           </button>
@@ -201,7 +200,7 @@ const LepsiZivot = () => {
             >
               <button
                 onClick={scrollToForm}
-                className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-all active:scale-[0.98]"
+                className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98]"
               >
                 Chci Druhý názor zdarma
               </button>
@@ -221,10 +220,10 @@ const LepsiZivot = () => {
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <ShieldCheck size={18} className="text-accent" />
-              <span className="text-sm font-medium text-accent tracking-wider uppercase">Nezávazné a zdarma</span>
+              <span className="text-sm font-medium text-accent tracking-wider uppercase">Než cokoliv podepíšete:</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Než cokoliv podepíšete, ověřte si to
+              Získejte upřímný nezávislý názor druhé strany
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Vyplňte kontakt a ozvu se vám do 24 hodin. Na rovinu vám řeknu, jestli do koupě jít teď, nebo je
@@ -275,40 +274,10 @@ const LepsiZivot = () => {
               </div>
             </div>
 
-            <label className="flex items-start gap-3 cursor-pointer group/gdpr">
-              <div className="relative mt-0.5 flex-shrink-0">
-                <input
-                  type="checkbox"
-                  checked={form.gdpr}
-                  onChange={(e) => update("gdpr", e.target.checked)}
-                  className="sr-only"
-                />
-                <div
-                  className={`w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center group-hover/gdpr:border-accent/60 ${
-                    form.gdpr ? "bg-accent border-accent" : "border-border bg-background"
-                  }`}
-                >
-                  {form.gdpr && (
-                    <svg className="w-3 h-3 text-accent-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </div>
-              </div>
-              <span className="text-xs text-muted-foreground leading-relaxed">
-                Souhlasím se{" "}
-                <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
-                  zpracováním osobních údajů
-                </Link>{" "}
-                za účelem vyřízení poptávky.
-              </span>
-            </label>
-            {errors.gdpr && <p className="text-destructive text-xs -mt-2">{errors.gdpr}</p>}
-
             <button
               type="submit"
               disabled={sending}
-              className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {sending ? (
                 <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
@@ -317,6 +286,14 @@ const LepsiZivot = () => {
               )}
               {sending ? "Odesílám…" : "Chci Druhý názor zdarma"}
             </button>
+
+            <p className="text-center text-xs text-muted-foreground leading-relaxed">
+              Odesláním souhlasíte se{" "}
+              <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                zpracováním osobních údajů
+              </Link>{" "}
+              za účelem vyřízení poptávky.
+            </p>
 
             <p className="text-center text-xs text-muted-foreground pt-1">
               Nebo rovnou zavolejte:{" "}
