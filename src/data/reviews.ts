@@ -5,7 +5,7 @@
 // FTID (hex): 0x470b9586742d1bf1:0x93156ab84e861190
 // Feature ID: /g/11z81436gr
 //
-// Tato data jsou ověřené reálné recenze z Google profilu (stav: červen 2026).
+// Tato data jsou ověřené reálné recenze z Google profilu (stav: 21. 7. 2026).
 // Sekce je připravená i na ŽIVÉ načítání přes Google Places API – stačí do
 // .env doplnit VITE_GOOGLE_PLACES_API_KEY a VITE_GOOGLE_PLACE_ID (formát
 // "ChIJ…"), zbytek řeší hook useGoogleReviews(). Když klíč chybí, použijí se
@@ -34,9 +34,23 @@ export const GOOGLE_ALL_REVIEWS_URL =
 export const GOOGLE_WRITE_REVIEW_URL = "https://g.page/r/CZARhk64ahWTEBM/review";
 
 export const GOOGLE_RATING = 5.0;
-export const GOOGLE_REVIEW_COUNT = 4;
+export const GOOGLE_REVIEW_COUNT = 7;
 
 export const googleReviews: GoogleReview[] = [
+  {
+    author: "Mirka Fedoryk",
+    rating: 5,
+    date: "2026-07-21",
+    text:
+      "Velice děkujeme za vaši ochotu a trpělivost, jste profíci ve svém oboru. Jsme moc rádi, že jste nám věnovali tolik času a pomohli nám. Nyní můžeme bydlet ve vysněném domečku. Z celého srdce doporučujeme",
+  },
+  {
+    author: "Adam Kurka",
+    rating: 5,
+    date: "2026-07-15",
+    text:
+      "Výborná zkušenost s paní Kubečkovou. Oceňuji profesionální přístup, ochotu a trpělivost při vysvětlování všech možností a za to upřímně děkuji.",
+  },
   {
     author: "Vojta Krejčí",
     rating: 5,
