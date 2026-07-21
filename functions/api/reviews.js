@@ -78,9 +78,13 @@ export async function onRequest(context) {
 
   if (!key || !placeId) return fromStored();
 
-  // Cache (1 h)
+  // Cache (1 h). Klíč je normalizovaný (bez query — jinak každý ?x=y obejde
+  // cache a vyvolá další dotaz na Google) a verzovaný: při změně formátu
+  // payloadu stačí zvednout rev a staré záznamy přirozeně vyprší (Cache API
+  // objekty nejde spolehlivě purgnout přes zone purge).
   const cache = caches.default;
-  const cacheKey = new Request(new URL(request.url).toString(), { method: "GET" });
+  const url = new URL(request.url);
+  const cacheKey = new Request(`${url.origin}${url.pathname}?rev=2`, { method: "GET" });
   const cached = await cache.match(cacheKey);
   if (cached) return cached;
 
