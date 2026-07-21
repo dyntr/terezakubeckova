@@ -203,7 +203,7 @@ const BytProDite = () => {
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
               Ať byt vašemu dítěti splácí nájemník, ne vy. Jedna špatně spočítaná splátka a z{" "}
-              <span className="text-gradient-gold italic">dárku pro dítě</span> je rodinný dluh na dvacet let.
+              <span className="text-gradient-gold italic">bytu pro dítě</span> je rodinný dluh na dvacet let.
             </motion.h1>
 
             <motion.p
@@ -212,7 +212,7 @@ const BytProDite = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Nemusíte mít na účtu miliony. Ale jestli přeceníte nájem nebo podceníte splátku, nezaplatí to jen vy –
+              Nemusíte mít na účtu miliony. Ale jestli přeceníte nájem nebo podceníte splátku, nezaplatíte to jen vy –
               zaplatí to celá rodina, dalších dvacet let. Zjistíme, jestli vám banka dnes vůbec dá druhou hypotéku a
               jestli vás ten byt jednou nezruinuje – <span className="text-accent font-semibold">zdarma</span>.
             </motion.p>
