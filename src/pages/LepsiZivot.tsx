@@ -18,6 +18,7 @@ const leadSchema = z.object({
 });
 
 const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
+const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/1mm2ym4r8qw9bh521kt6eb75qdljxbht";
 
 declare global {
   interface Window {
@@ -113,19 +114,32 @@ const LepsiZivot = () => {
     setSending(true);
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: "Poptávka – Rodinný audit bezpečnosti (/lepsi-zivot)",
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-        }),
-      });
+      const payload = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        source: "/lepsi-zivot",
+      };
 
-      if (res.ok) {
+      const [web3Res] = await Promise.allSettled([
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: "Poptávka – Rodinný audit bezpečnosti (/lepsi-zivot)",
+            ...payload,
+          }),
+        }),
+        fetch(MAKE_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+      ]);
+
+      if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
         toast.success("Poptávka odeslána! Ozvu se Vám co nejdříve.");
         setForm({ name: "", email: "", phone: "" });
