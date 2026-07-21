@@ -30,17 +30,17 @@ const planPoints = [
   {
     icon: ClipboardCheck,
     title: "Test druhé bonity",
-    text: "Do 3 minut zjistíme, jestli vám banka dnes reálně schválí hypotéku na druhou nemovitost – a za jakých podmínek, i bez milionů na účtu.",
+    text: "Než dáte realitce zálohu, zjistíme, jestli vám banka vůbec schválí hypotéku na druhou nemovitost – a za jakých podmínek, i bez milionů na účtu.",
   },
   {
     icon: Calculator,
     title: "Nájemní cashflow",
-    text: "Spočítáme skutečný poměr mezi splátkou a čistým nájmem po odečtení energií, fondu oprav a rezervy na neobsazenost. Ne podle optimistického čísla z fóra.",
+    text: "Spočítáme skutečný poměr mezi splátkou a čistým nájmem po odečtení energií, fondu oprav a rezervy na neobsazenost. Číslo z fóra vás může stát statisíce.",
   },
   {
     icon: Scale,
     title: "Byt, nebo DIP",
-    text: "Na rovinu vám řekneme, jestli se vám byt pro dítě vyplatí, nebo je bezpečnější a bez starostí s nájemníky spořit přes DIP.",
+    text: "Na rovinu vám řekneme, jestli se vám byt pro dítě vyplatí, nebo jestli zbytečně riskujete rodinné finance a spoření přes DIP by bylo bezpečnější.",
   },
 ];
 
@@ -48,33 +48,33 @@ const recognitionGroups = [
   {
     heading: "Bonita a banka",
     items: [
-      "Dá nám banka druhou hypotéku, i když nejsme milionáři?",
-      "Bojíme se, že nás banka kvůli první hypotéce rovnou odmítne.",
-      "Zvládneme splácet dvě hypotéky zároveň, i kdyby jeden z nás byl na rodičovské?",
+      "Co když nám banka řekne ne po měsících plánování a celý plán spadne?",
+      "První hypotéka nás může připravit o druhou, aniž bychom to tušili dopředu.",
+      "Jedna rodičovská dovolená a neutáhneme ani jednu splátku, natož obě.",
     ],
   },
   {
     heading: "Nájem a cashflow",
     items: [
-      "Co když nájem nepokryje celou splátku a budeme doplácet ze svého?",
-      "Jak se vůbec nastavuje nájemné, aby ho nesežrala inflace?",
-      "Kolik nám nájemník doopravdy splatí? Číslo z fóra je skoro vždy vyšší než realita.",
+      "Pár tisíc měsíčně navíc ze svého si všimneme, až bude pozdě.",
+      "Nájem, co roky nezvedáme, tiše žere celou marži, dokud nejsme v mínusu.",
+      "Číslo z fóra, podle kterého jsme počítali návratnost, je smyšlené.",
     ],
   },
   {
     heading: "Rozhodování ve dvou",
     items: [
-      "On chce finanční jistotu, ona byt pro dítě. Kdo z nás má pravdu?",
-      "1+kk, nebo rovnou 2+kk pro budoucnost dítěte?",
-      "Prarodiče tlačí, ať koupíme byt vnoučeti – máme na to jít teď?",
+      "Hádka o tom, jestli riskujeme rodinné jistoty kvůli bytu, co možná ani nebudeme potřebovat.",
+      "Špatná dispozice a byt bude za deset let malý, nebo se ho nezbavíme.",
+      "Prarodiče tlačí a nikdo nahlas neřekne, co se stane, když se to nepovede.",
     ],
   },
   {
     heading: "Byt, nebo alternativa",
     items: [
-      "2 000 000 Kč v hotovosti, nebo rovnou byt pro dítě?",
-      "Nevyplatilo by se nám místo bytu spořit přes DIP?",
-      "Ptáme se na fóru, jestli se to vyplatí – ale cizí lidé neznají naši hypotéku ani naše dítě.",
+      "Zamknout se na dvacet let do bytu, který dítě možná ani nebude chtít.",
+      "Riskovat rodinné finance kvůli nemovitosti místo klidného spoření, co nikoho nezruinuje.",
+      "Rozhodnutí za milion korun podle rady cizích lidí z internetu, co neznají naši výplatní pásku.",
     ],
   },
 ];
@@ -191,7 +191,7 @@ const BytProDite = () => {
             >
               <div className="h-px w-10 bg-accent" />
               <span className="text-xs md:text-sm font-medium text-accent tracking-wider uppercase">
-                Pro rodiče, co chtějí dítěti dát víc než jen radu
+                Pro rodiče, kteří vsázejí budoucnost dítěte na jeden podpis
               </span>
               <div className="h-px w-10 bg-accent" />
             </motion.div>
@@ -202,9 +202,8 @@ const BytProDite = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
-              Ať byt vašemu dítěti splácí nájemník, ne vy.{" "}
-              <span className="text-gradient-gold italic">Skvělý plán</span> — pokud ho nepodepíšete se zavřenýma
-              očima.
+              Ať byt vašemu dítěti splácí nájemník, ne vy. Jedna špatně spočítaná splátka a z{" "}
+              <span className="text-gradient-gold italic">dárku pro dítě</span> je rodinný dluh na dvacet let.
             </motion.h1>
 
             <motion.p
@@ -213,8 +212,9 @@ const BytProDite = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Nemusíte mít na účtu miliony ani být investoři. Zjistěte během 3 minut, jestli vám dnes banka schválí
-              druhou hypotéku a jestli se vám nájem opravdu vyplatí – <span className="text-accent font-semibold">zdarma</span>.
+              Nemusíte mít na účtu miliony. Ale jestli přeceníte nájem nebo podceníte splátku, nezaplatí to jen vy –
+              zaplatí to celá rodina, dalších dvacet let. Zjistíme, jestli vám banka dnes vůbec dá druhou hypotéku a
+              jestli vás ten byt jednou nezruinuje – <span className="text-accent font-semibold">zdarma</span>.
             </motion.p>
 
             <motion.div
@@ -348,9 +348,10 @@ const BytProDite = () => {
             transition={{ duration: 0.6 }}
             className="text-lg md:text-xl text-foreground leading-relaxed"
           >
-            Byli jste se podívat na menší byt. Ne pro sebe – pro vaše dítě. Až jednou půjde na výšku nebo se bude
-            chtít osamostatnit, bude mít kde bydlet. Plán je jasný: koupit ho na hypotéku a nechat ho splácet
-            nájemníkem. Jenže cestou domů přišly pochybnosti, které vám žádný realitní inzerát nezodpoví.
+            Byli jste se podívat na menší byt – ne pro sebe, pro dítě. V hlavě už vidíte, jak za patnáct let bydlí
+            nezávisle, zatímco jeho vrstevníci budou přeplácet nájmy na kraji města, protože byty budou o milion
+            dráž. Jenže tenhle plán má chybu, kterou teď nevidíte: pokud špatně spočítáte nájem nebo splátku,
+            neplatíte dítěti budoucnost. Platíte vlastní chybu – měsíc co měsíc, dalších dvacet let.
           </motion.p>
         </div>
       </section>
@@ -368,8 +369,8 @@ const BytProDite = () => {
               Poznáváte se v některé z těchto vět?
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Pokud ano, nejste sami. Tohle si v hlavě přehrává skoro každá rodina, která zvažuje byt jako start do
-              života pro své dítě.
+              Pokud ano, nejste sami – a přesně tahle nejistota rozhoduje o tom, jestli za pár let dítěti dáte
+              zajištěný start, nebo jen další splátku, co vás bude držet zkrátka.
             </p>
           </motion.div>
 
@@ -410,6 +411,9 @@ const BytProDite = () => {
             Nula korun měsíčně navíc ještě <span className="text-gradient-gold">neznamená špatný obchod</span>.
             <br />
             Znamená to, že vám byt platí <span className="text-gradient-gold">někdo jiný</span>.
+            <br />
+            Špatný odhad nájmu ale znamená, že ho <span className="text-gradient-gold">platíte vy</span> – přesně
+            tehdy, když to nejmíň čekáte.
           </motion.p>
         </div>
       </section>
@@ -432,7 +436,8 @@ const BytProDite = () => {
               Test druhé bonity
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Kupovat byt pro dítě je skvělý nápad. Bez správné matematiky se z něj ale může stát finanční past.
+              Kupovat byt pro dítě je skvělý nápad. Bez správné matematiky se z něj ale může stát finanční past,
+              kterou splácíte vy – ne nájemník.
             </p>
           </motion.div>
 
@@ -460,7 +465,8 @@ const BytProDite = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-center text-lg md:text-xl font-heading font-semibold text-foreground leading-relaxed mt-12 max-w-2xl mx-auto"
           >
-            Nekupujte byt proto, že to zní jako dobrý nápad. Kupujte ho, až vám to vyjde na papíře i v peněžence.
+            Nekupujte byt proto, že zní jako dobrý nápad. Kupujte ho, až budete přesně vědět, co se stane, když se
+            něco pokazí.
           </motion.p>
         </div>
       </section>
