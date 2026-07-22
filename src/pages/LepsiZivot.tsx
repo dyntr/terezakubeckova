@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -331,13 +331,12 @@ const LepsiZivot = () => {
               </span>
             </div>
 
-            <AnimatePresence mode="wait">
+            <>
               {currentQuestion ? (
                 <motion.div
                   key={currentQuestion.key}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.25 }}
                 >
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-6 text-center">
@@ -437,7 +436,7 @@ const LepsiZivot = () => {
                   </p>
                 </motion.form>
               )}
-            </AnimatePresence>
+            </>
           </motion.div>
         </div>
       </section>
