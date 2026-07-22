@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Send, Calculator, PiggyBank, ScaleIcon, ShieldCheck, Check } from "lucide-react";
+import { Send, Calculator, PiggyBank, ScaleIcon, Check, ChevronLeft } from "lucide-react";
 import TKLogo from "@/components/TKLogo";
 import ReviewsSection from "@/components/ReviewsSection";
 import CertificatesSection from "@/components/CertificatesSection";
@@ -78,14 +78,47 @@ const recognitionGroups = [
   },
 ];
 
+const questions = [
+  {
+    key: "propertyPrice",
+    question: "Kolik stojí nemovitost, o kterou máte zájem?",
+    options: ["Do 4 mil. Kč", "4–6 mil. Kč", "6–8 mil. Kč", "Přes 8 mil. Kč"],
+  },
+  {
+    key: "savings",
+    question: "Kolik máte našetřeno na vlastní zdroje?",
+    options: ["Méně než 300 tis. Kč", "300–700 tis. Kč", "700 tis.–1,5 mil. Kč", "Přes 1,5 mil. Kč"],
+  },
+  {
+    key: "income",
+    question: "Jaký je váš společný čistý měsíční příjem dnes?",
+    options: ["Do 60 000 Kč", "60 000–90 000 Kč", "90 000–120 000 Kč", "Přes 120 000 Kč"],
+  },
+  {
+    key: "timing",
+    question: "Kdy jeden z vás nastoupí na rodičovskou / čekáte miminko?",
+    options: ["Už jsme na rodičovské", "Do 3 měsíců", "Za 4–8 měsíců", "Za víc než 8 měsíců"],
+  },
+] as const;
+
+type AnswerKey = (typeof questions)[number]["key"];
+type Answers = Record<AnswerKey, string>;
+
 const LepsiZivot = () => {
   const recognitionRef = useRef(null);
   const auditRef = useRef(null);
-  const formRef = useRef(null);
+  const toolRef = useRef(null);
   const recognitionInView = useInView(recognitionRef, { once: true, margin: "-100px" });
   const auditInView = useInView(auditRef, { once: true, margin: "-100px" });
-  const formInView = useInView(formRef, { once: true, margin: "-100px" });
+  const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
 
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({
+    propertyPrice: "",
+    savings: "",
+    income: "",
+    timing: "",
+  });
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
@@ -96,8 +129,15 @@ const LepsiZivot = () => {
   };
 
   const scrollToForm = () => {
-    document.querySelector("#druhy-nazor")?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector("#ted-nebo-pockat")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const selectAnswer = (key: AnswerKey, value: string) => {
+    setAnswers((a) => ({ ...a, [key]: value }));
+    setStep((s) => s + 1);
+  };
+
+  const goBack = () => setStep((s) => Math.max(0, s - 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,6 +158,10 @@ const LepsiZivot = () => {
         name: form.name,
         email: form.email,
         phone: form.phone,
+        cena_nemovitosti: answers.propertyPrice,
+        uspory: answers.savings,
+        prijem: answers.income,
+        terminace_rodicovske: answers.timing,
         source: "/lepsi-zivot",
       };
 
@@ -127,7 +171,7 @@ const LepsiZivot = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: "Poptávka – Rodinný audit bezpečnosti (/lepsi-zivot)",
+            subject: "Verdikt „Teď, nebo počkat?“ (/lepsi-zivot)",
             ...payload,
           }),
         }),
@@ -140,8 +184,10 @@ const LepsiZivot = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Poptávka odeslána! Ozvu se Vám co nejdříve.");
+        toast.success("Odpovědi odeslány! Ozvu se vám do 24 hodin s vaším verdiktem.");
         setForm({ name: "", email: "", phone: "" });
+        setAnswers({ propertyPrice: "", savings: "", income: "", timing: "" });
+        setStep(0);
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -154,6 +200,10 @@ const LepsiZivot = () => {
 
   const inputClass =
     "w-full bg-background border border-border rounded-lg px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-shadow";
+
+  const totalSteps = questions.length + 1;
+  const progressPct = ((step + 1) / totalSteps) * 100;
+  const currentQuestion = step < questions.length ? questions[step] : null;
 
   return (
     <div className="min-h-screen">
@@ -170,13 +220,13 @@ const LepsiZivot = () => {
             onClick={scrollToForm}
             className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
-            <span className="sm:hidden">Poptávka</span>
-            <span className="hidden sm:inline">Chci Druhý názor zdarma</span>
+            <span className="sm:hidden">Verdikt zdarma</span>
+            <span className="hidden sm:inline">Chci znát verdikt zdarma</span>
           </button>
         </div>
       </header>
 
-      {/* Hero — headline navazuje na hlavní kreativu kampaně */}
+      {/* Hero — headline navazuje 1:1 na hlavní kreativu kampaně */}
       <section className="relative overflow-hidden bg-primary">
         <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_80%_0%,hsl(215_35%_35%/0.6),transparent_60%)]" />
         <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
@@ -200,8 +250,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
-              Máte za sebou prohlídku nového bydlení, cítíte, že by to mohl být váš nový{" "}
-              <span className="text-gradient-gold italic">domov</span>, ale je to správný krok?
+              Byli jste na prohlídce. Čekáte miminko.{" "}
+              <span className="text-gradient-gold italic">Máte do toho jít?</span>
             </motion.h1>
 
             <motion.p
@@ -210,8 +260,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Znám to taky, cítila jsem se stejně a jediné, co jsem potřebovala, byl druhý názor. Dnes vám ho
-              nabízím <span className="text-accent font-semibold">zdarma</span>.
+              Odpovězte na 4 krátké otázky o vašem rozpočtu. Do 24 hodin vám osobně zavolám s jasným verdiktem –{" "}
+              <span className="text-accent font-semibold">zdarma</span>.
             </motion.p>
 
             <motion.div
@@ -223,110 +273,176 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98]"
               >
-                Chci Druhý názor zdarma
+                Chci znát verdikt zdarma
               </button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Lead form — hned pod hlavním textem, ať to nemusí nikdo hledat */}
-      <section id="druhy-nazor" className="section-padding bg-background" ref={formRef}>
+      {/* Teď, nebo počkat? — interaktivní nástroj nahrazující statický formulář */}
+      <section id="ted-nebo-pockat" className="section-padding bg-background" ref={toolRef}>
         <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={formInView ? { opacity: 1, y: 0 } : {}}
+            animate={toolInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
-              <ShieldCheck size={18} className="text-accent" />
-              <span className="text-sm font-medium text-accent tracking-wider uppercase">Než cokoliv podepíšete:</span>
+              <span className="text-sm font-medium text-accent tracking-wider uppercase">
+                4 otázky. Jeden jasný verdikt.
+              </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Získejte upřímný nezávislý názor druhé strany
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Teď, nebo počkat?</h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Vyplňte kontakt a ozvu se vám do 24 hodin. Na rovinu vám řeknu, jestli do koupě jít teď, nebo je
-              bezpečnější počkat.
+              Odpovězte na pár otázek o vašem rozpočtu a já vám do 24 hodin osobně zavolám s konkrétní odpovědí na
+              míru vašim číslům.
             </p>
           </motion.div>
 
-          <motion.form
-            onSubmit={handleSubmit}
-            noValidate
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={formInView ? { opacity: 1, y: 0 } : {}}
+            animate={toolInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-5 sm:p-8 space-y-4 sm:space-y-5"
+            className="glass-card p-5 sm:p-8"
           >
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
-              <input
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-                className={inputClass}
-                placeholder="Jana Nováková"
-              />
-              {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => update("email", e.target.value)}
-                  className={inputClass}
-                  placeholder="jana@email.cz"
-                />
-                {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
-                <input
-                  value={form.phone}
-                  onChange={(e) => update("phone", e.target.value)}
-                  className={inputClass}
-                  placeholder="+420 xxx xxx xxx"
-                  inputMode="tel"
-                />
-                {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={sending}
-              className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {sending ? (
-                <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
-              ) : (
-                <Send size={20} />
+            {/* Progress bar */}
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+              {step > 0 && (
+                <button
+                  type="button"
+                  onClick={goBack}
+                  aria-label="Zpět"
+                  className="flex-shrink-0 p-1.5 rounded-lg text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
+                >
+                  <ChevronLeft size={20} />
+                </button>
               )}
-              {sending ? "Odesílám…" : "Chci Druhý názor zdarma"}
-            </button>
+              <div className="flex-1 h-1.5 rounded-full bg-border overflow-hidden">
+                <motion.div
+                  className="h-full gold-gradient rounded-full"
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ duration: 0.4 }}
+                />
+              </div>
+              <span className="flex-shrink-0 text-xs font-medium text-muted-foreground tabular-nums">
+                {Math.min(step + 1, totalSteps)}/{totalSteps}
+              </span>
+            </div>
 
-            <p className="text-center text-xs text-muted-foreground leading-relaxed">
-              Odesláním souhlasíte se{" "}
-              <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
-                zpracováním osobních údajů
-              </Link>{" "}
-              za účelem vyřízení poptávky.
-            </p>
+            <AnimatePresence mode="wait">
+              {currentQuestion ? (
+                <motion.div
+                  key={currentQuestion.key}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-6 text-center">
+                    {currentQuestion.question}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {currentQuestion.options.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => selectAnswer(currentQuestion.key, option)}
+                        className="text-left px-5 py-4 rounded-xl border-2 border-border bg-background hover:border-accent hover:bg-accent/5 transition-all font-medium text-foreground active:scale-[0.98]"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="contact"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-4 sm:space-y-5"
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-2 text-center">
+                    Skoro hotovo — kam vám mám zavolat?
+                  </h3>
+                  <p className="text-sm text-muted-foreground text-center mb-4">
+                    Vaše odpovědi mám. Napište mi na sebe kontakt a do 24 hodin se ozvu s vaším verdiktem.
+                  </p>
 
-            <p className="text-center text-xs text-muted-foreground pt-1">
-              Nebo rovnou zavolejte:{" "}
-              <a href="tel:+420775303314" className="text-accent hover:underline font-medium">
-                775 303 314
-              </a>
-            </p>
-          </motion.form>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
+                    <input
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      className={inputClass}
+                      placeholder="Jana Nováková"
+                    />
+                    {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => update("email", e.target.value)}
+                        className={inputClass}
+                        placeholder="jana@email.cz"
+                      />
+                      {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
+                      <input
+                        value={form.phone}
+                        onChange={(e) => update("phone", e.target.value)}
+                        className={inputClass}
+                        placeholder="+420 xxx xxx xxx"
+                        inputMode="tel"
+                      />
+                      {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {sending ? (
+                      <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                    ) : (
+                      <Send size={20} />
+                    )}
+                    {sending ? "Odesílám…" : "Chci svůj verdikt zdarma"}
+                  </button>
+
+                  <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                    Odesláním souhlasíte se{" "}
+                    <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                      zpracováním osobních údajů
+                    </Link>{" "}
+                    za účelem vyřízení poptávky.
+                  </p>
+
+                  <p className="text-center text-xs text-muted-foreground pt-1">
+                    Nebo rovnou zavolejte:{" "}
+                    <a href="tel:+420775303314" className="text-accent hover:underline font-medium">
+                      775 303 314
+                    </a>
+                  </p>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
-      {/* Reference — hned pod formulářem, stejná sekce jako na hlavní stránce */}
+      {/* Reference — hned pod nástrojem, stejná sekce jako na hlavní stránce */}
       <ReviewsSection />
 
       {/* Partneři napříč trhem */}
@@ -410,7 +526,7 @@ const LepsiZivot = () => {
         </div>
       </section>
 
-      {/* Rodinný audit bezpečnosti — mechanismus/nabídka */}
+      {/* Rodinný audit bezpečnosti — co konkrétně z odpovědí vytěžíte */}
       <section className="section-padding bg-background" ref={auditRef}>
         <div className="container-narrow mx-auto">
           <motion.div
@@ -425,7 +541,7 @@ const LepsiZivot = () => {
               <div className="h-px w-12 bg-accent" />
             </div>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Rodinný audit bezpečnosti
+              Z vašich odpovědí vznikne rodinný audit bezpečnosti
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Většinu mladých rodin nestojí miliony špatný úrok. Stojí je to špatné načasování.
