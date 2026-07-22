@@ -184,7 +184,7 @@ const LepsiZivot = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Odpovědi odeslány! Ozvu se vám do 24 hodin s vaším verdiktem.");
+        toast.success("Odpovědi odeslány! Do 24 hodin vám pošlu váš výsledek.");
         setForm({ name: "", email: "", phone: "" });
         setAnswers({ propertyPrice: "", savings: "", income: "", timing: "" });
         setStep(0);
@@ -250,8 +250,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
             >
-              Byli jste na prohlídce. Čekáte miminko.{" "}
-              <span className="text-gradient-gold italic">Máte do toho jít?</span>
+              Máte vyhlídnutý nový domov.{" "}
+              <span className="text-gradient-gold italic">Zvládnete ho i s miminkem na cestě?</span>
             </motion.h1>
 
             <motion.p
@@ -260,8 +260,8 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
             >
-              Odpovězte na 4 krátké otázky o vašem rozpočtu. Do 24 hodin vám osobně zavolám s jasným verdiktem –{" "}
-              <span className="text-accent font-semibold">zdarma</span>.
+              4 kliknutí vám ukážou, jak to řeší rodiny přesně ve vaší situaci. Výsledek vám pošlu do 24 hodin –{" "}
+              <span className="text-accent font-semibold">zdarma</span>, bez jediného telefonátu navíc.
             </motion.p>
 
             <motion.div
@@ -291,13 +291,13 @@ const LepsiZivot = () => {
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <span className="text-sm font-medium text-accent tracking-wider uppercase">
-                4 otázky. Jeden jasný verdikt.
+                4 kliknutí. Nulové papírování. Jeden jasný verdikt.
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Teď, nebo počkat?</h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Odpovězte na pár otázek o vašem rozpočtu a já vám do 24 hodin osobně zavolám s konkrétní odpovědí na
-              míru vašim číslům.
+              Zjistěte, jak to řeší rodiny přesně ve vaší situaci. Žádné papírování, žádný hovor navíc – jen pár
+              kliknutí. Odpověď na míru vašim číslům vám pošlu do 24 hodin.
             </p>
           </motion.div>
 
@@ -366,10 +366,10 @@ const LepsiZivot = () => {
                   className="space-y-4 sm:space-y-5"
                 >
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-2 text-center">
-                    Skoro hotovo — kam vám mám zavolat?
+                    Skoro hotovo — kam vám mám poslat výsledek?
                   </h3>
                   <p className="text-sm text-muted-foreground text-center mb-4">
-                    Vaše odpovědi mám. Napište mi na sebe kontakt a do 24 hodin se ozvu s vaším verdiktem.
+                    Vaše čísla už mám. Nechte mi na sebe kontakt a do 24 hodin budete mít jasno.
                   </p>
 
                   <div>
@@ -462,7 +462,7 @@ const LepsiZivot = () => {
           >
             To bydlení se vám líbilo — dům se zahradou, nebo byt, ve kterém by se konečně narovnala záda. Už jste si
             představovali, kde bude stát postýlka. Jenže cestou domů v autě nastalo ticho — protože v hlavě vám
-            běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá.
+            běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá. My ji spočítáme za vás.
           </motion.p>
         </div>
       </section>
@@ -480,7 +480,7 @@ const LepsiZivot = () => {
               Poznáváte se v některé z těchto vět?
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Pokud ano, nejste sami. Tohle si v hlavě přehrává skoro každý pár, který čeká miminko a řeší bydlení.
+              Pokud ano, nejste sami — a přesně těmhle rodinám pomáhám změnit chaos v hlavě na jasné ano, nebo ne.
             </p>
           </motion.div>
 
@@ -540,7 +540,7 @@ const LepsiZivot = () => {
               <div className="h-px w-12 bg-accent" />
             </div>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              Z vašich odpovědí vznikne rodinný audit bezpečnosti
+              Co přesně z vašich odpovědí zjistíte
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Většinu mladých rodin nestojí miliony špatný úrok. Stojí je to špatné načasování.
