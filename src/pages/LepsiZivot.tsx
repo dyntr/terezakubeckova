@@ -225,16 +225,11 @@ const LepsiZivot = () => {
         </div>
       </header>
 
-      {/* Hero — vizuálně blízko reklamní kreativě: foto na pozadí, tvrdý kontrast, bold sans nadpis */}
-      <section className="relative overflow-hidden bg-black min-h-[560px] sm:min-h-[640px] flex items-end">
-        <img
-          src="/hero-portrait.webp"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-top grayscale contrast-125"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+      {/* Hero — bold sans nadpis v duchu reklamní kreativy, bez fotky */}
+      <section className="relative overflow-hidden bg-primary">
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_80%_0%,hsl(215_35%_35%/0.6),transparent_60%)]" />
 
-        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 pb-10 sm:pb-14 pt-28 relative z-10 w-full">
+        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 w-full">
           <div className="max-w-xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
