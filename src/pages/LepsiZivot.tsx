@@ -9,7 +9,6 @@ import ReviewsSection from "@/components/ReviewsSection";
 import CertificatesSection from "@/components/CertificatesSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
-import CookieBanner from "@/components/CookieBanner";
 
 const leadSchema = z.object({
   name: z.string().trim().min(1, "Vyplňte jméno").max(100),
@@ -226,42 +225,46 @@ const LepsiZivot = () => {
         </div>
       </header>
 
-      {/* Hero — headline navazuje 1:1 na hlavní kreativu kampaně */}
-      <section className="relative overflow-hidden bg-primary">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_80%_0%,hsl(215_35%_35%/0.6),transparent_60%)]" />
-        <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
-          <div className="max-w-2xl mx-auto text-center">
+      {/* Hero — vizuálně blízko reklamní kreativě: foto na pozadí, tvrdý kontrast, bold sans nadpis */}
+      <section className="relative overflow-hidden bg-black min-h-[560px] sm:min-h-[640px] flex items-end">
+        <img
+          src="/hero-portrait.webp"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-top grayscale contrast-125"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+
+        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 pb-10 sm:pb-14 pt-28 relative z-10 w-full">
+          <div className="max-w-xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center justify-center gap-2 mb-5"
+              className="flex items-center justify-center gap-2 mb-4"
             >
-              <div className="h-px w-10 bg-accent" />
-              <span className="text-xs md:text-sm font-medium text-accent tracking-wider uppercase">
+              <span className="text-xs sm:text-sm font-bold text-accent tracking-wider uppercase">
                 Pro těhotné maminky od mamky dvou dětí
               </span>
-              <div className="h-px w-10 bg-accent" />
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-primary-foreground leading-[1.15] mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.05] mb-5 tracking-tight"
             >
               Máte vyhlídnutý nový domov.{" "}
-              <span className="text-gradient-gold italic">Zvládnete ho i s miminkem na cestě?</span>
+              <span className="text-accent">Zvládnete ho i s miminkem na cestě?</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base md:text-lg text-primary-foreground/85 leading-relaxed mb-8"
+              className="text-base sm:text-lg text-white/90 leading-relaxed mb-7 font-medium"
             >
               4 kliknutí vám ukážou, jak to řeší rodiny přesně ve vaší situaci. Výsledek vám pošlu do 24 hodin –{" "}
-              <span className="text-accent font-semibold">zdarma</span>, bez jediného telefonátu navíc.
+              <span className="text-accent font-bold">zdarma</span>, bez jediného telefonátu navíc.
             </motion.p>
 
             <motion.div
@@ -271,7 +274,7 @@ const LepsiZivot = () => {
             >
               <button
                 onClick={scrollToForm}
-                className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-semibold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98]"
+                className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-extrabold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
                 Chci znát verdikt zdarma
               </button>
@@ -577,7 +580,6 @@ const LepsiZivot = () => {
       </section>
 
       <Footer />
-      <CookieBanner />
     </div>
   );
 };
