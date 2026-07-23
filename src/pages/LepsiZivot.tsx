@@ -38,8 +38,8 @@ const auditPoints = [
   },
   {
     icon: ScaleIcon,
-    title: "Jasný verdikt",
-    text: "Na rovinu vám řekneme, zda do koupě jít letos, nebo je bezpečnější počkat. Bez omáček a bez tlaku něco podepsat.",
+    title: "Vaše bezpečné číslo",
+    text: "Na rovinu vám řekneme přesnou částku, do které je hypotéka na rodičovské bezpečná – a jestli letos jít do koupě, nebo počkat.",
   },
 ];
 
@@ -170,7 +170,7 @@ const LepsiZivot = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: "Verdikt „Teď, nebo počkat?“ (/lepsi-zivot)",
+            subject: "Kalkulačka klidného spánku – bezpečné číslo (/lepsi-zivot)",
             ...payload,
           }),
         }),
@@ -183,7 +183,7 @@ const LepsiZivot = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Odpovědi odeslány! Do 24 hodin vám pošlu váš výsledek.");
+        toast.success("Odpovědi odeslány! Do 48 hodin vám pošlu vaše bezpečné číslo.");
         setForm({ name: "", email: "", phone: "" });
         setAnswers({ propertyPrice: "", savings: "", income: "", timing: "" });
         setStep(0);
@@ -219,8 +219,8 @@ const LepsiZivot = () => {
             onClick={scrollToForm}
             className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
-            <span className="sm:hidden">Verdikt zdarma</span>
-            <span className="hidden sm:inline">Chci znát verdikt zdarma</span>
+            <span className="sm:hidden">Číslo zdarma</span>
+            <span className="hidden sm:inline">Chci své bezpečné číslo zdarma</span>
           </button>
         </div>
       </header>
@@ -238,7 +238,7 @@ const LepsiZivot = () => {
               className="flex items-center justify-center gap-2 mb-4"
             >
               <span className="text-xs sm:text-sm font-bold text-accent tracking-wider uppercase">
-                Pro těhotné maminky od mamky dvou dětí
+                Kalkulačka klidného spánku
               </span>
             </motion.div>
 
@@ -258,8 +258,9 @@ const LepsiZivot = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base sm:text-lg text-white/90 leading-relaxed mb-7 font-medium"
             >
-              4 kliknutí vám ukážou, jak to řeší rodiny přesně ve vaší situaci. Výsledek vám pošlu do 24 hodin –{" "}
-              <span className="text-accent font-bold">zdarma</span>, bez jediného telefonátu navíc.
+              Zjistěte do 48 hodin vaše přesné <span className="text-accent font-bold">bezpečné číslo</span> hypotéky
+              na rodičovské – od mamky dvou dětí, co ví, jaké je to počítat každou korunu.{" "}
+              <span className="text-accent font-bold">Zdarma</span>, bez jediného telefonátu navíc.
             </motion.p>
 
             <motion.div
@@ -271,14 +272,14 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-extrabold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
-                Chci znát verdikt zdarma
+                Chci své bezpečné číslo zdarma
               </button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Teď, nebo počkat? — interaktivní nástroj nahrazující statický formulář */}
+      {/* Kalkulačka klidného spánku — interaktivní nástroj nahrazující statický formulář */}
       <section id="ted-nebo-pockat" className="section-padding bg-background" ref={toolRef}>
         <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
@@ -289,13 +290,15 @@ const LepsiZivot = () => {
           >
             <div className="flex items-center justify-center gap-2 mb-4">
               <span className="text-sm font-medium text-accent tracking-wider uppercase">
-                4 kliknutí. Nulové papírování. Jeden jasný verdikt.
+                4 kliknutí. Nulové papírování. Vaše bezpečné číslo.
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Teď, nebo počkat?</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              Kalkulačka klidného spánku
+            </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Zjistěte, jak to řeší rodiny přesně ve vaší situaci. Žádné papírování, žádný hovor navíc – jen pár
-              kliknutí. Odpověď na míru vašim číslům vám pošlu do 24 hodin.
+              kliknutí. Vaše přesné bezpečné číslo hypotéky na rodičovské vám pošlu do 48 hodin.
             </p>
           </motion.div>
 
@@ -364,10 +367,11 @@ const LepsiZivot = () => {
                   className="space-y-4 sm:space-y-5"
                 >
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-2 text-center">
-                    Skoro hotovo — kam vám mám poslat výsledek?
+                    Skoro hotovo — kam vám mám poslat vaše bezpečné číslo?
                   </h3>
                   <p className="text-sm text-muted-foreground text-center mb-4">
-                    Vaše čísla už mám. Nechte mi na sebe kontakt a do 24 hodin budete mít jasno.
+                    Vaše čísla už mám. Nechte mi na sebe kontakt a do 48 hodin budete mít svoje přesné bezpečné
+                    číslo.
                   </p>
 
                   <div>
@@ -415,7 +419,7 @@ const LepsiZivot = () => {
                     ) : (
                       <Send size={20} />
                     )}
-                    {sending ? "Odesílám…" : "Chci svůj verdikt zdarma"}
+                    {sending ? "Odesílám…" : "Chci své bezpečné číslo zdarma"}
                   </button>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
@@ -569,7 +573,7 @@ const LepsiZivot = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-center text-lg md:text-xl font-heading font-semibold text-foreground leading-relaxed mt-12 max-w-2xl mx-auto"
           >
-            Nehledejte „nejlevnější hypotéku“. Hledejte jistotu, že vaše rodina neskočí do pasti.
+            Nehledejte „nejlevnější hypotéku“. Hledejte svoje bezpečné číslo, se kterým budete klidně spát.
           </motion.p>
         </div>
       </section>
