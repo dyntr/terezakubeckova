@@ -236,7 +236,7 @@ const LepsiZivot = () => {
               className="flex items-center justify-center gap-2 mb-6"
             >
               <span className="text-sm sm:text-base font-extrabold text-red-400 tracking-wider uppercase">
-                Máte před sebou nejtěžší rozhodnutí na začátku rodičovství
+                Stojíte před nejtěžším rozhodnutím na samém začátku rodičovství.
               </span>
             </motion.div>
 
