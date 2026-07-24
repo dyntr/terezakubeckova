@@ -217,7 +217,7 @@ const LepsiZivot = () => {
             className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
             <span className="sm:hidden">Bezpečná splátka</span>
-            <span className="hidden sm:inline">Chci své bezpečné číslo zdarma</span>
+            <span className="hidden sm:inline">Chci znát moji bezpečnou splátku</span>
           </button>
         </div>
       </header>
@@ -287,8 +287,8 @@ const LepsiZivot = () => {
               Kalkulačka klidného spánku
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Zjistěte, jak to řeší rodiny přesně ve vaší situaci. Žádné papírování, žádný hovor navíc – jen pár
-              kliknutí. Vaši přesnou bezpečnou splátku hypotéky na rodičovské vám pošlu do 24 hodin.
+              Zjistěte, jak to řeší rodiny přesně ve vaší situaci. Jen pár kliknutí a dozvíte se svoji přesnou
+              bezpečnou splátku hypotéky na rodičovské, pošlu vám ji do 24 hodin.
             </p>
           </motion.div>
 
@@ -357,7 +357,7 @@ const LepsiZivot = () => {
                   className="space-y-4 sm:space-y-5"
                 >
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4 text-center">
-                    Kam vám máme poslat vaši BEZPEČNOU splátku a simulaci rozpočtu?
+                    Kam vám mám poslat vaši BEZPEČNOU splátku?
                   </h3>
 
                   <div>
@@ -394,10 +394,6 @@ const LepsiZivot = () => {
                       {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground -mt-2">
-                    Slibujeme, že vám budeme volat pouze pro ujasnění detailů k propočtu, žádný spam.
-                  </p>
-
                   <button
                     type="submit"
                     disabled={sending}
