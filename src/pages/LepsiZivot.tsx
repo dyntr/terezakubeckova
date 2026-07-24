@@ -219,7 +219,7 @@ const LepsiZivot = () => {
             onClick={scrollToForm}
             className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
-            <span className="sm:hidden">Číslo zdarma</span>
+            <span className="sm:hidden">Bezpečná splátka</span>
             <span className="hidden sm:inline">Chci své bezpečné číslo zdarma</span>
           </button>
         </div>
@@ -239,7 +239,7 @@ const LepsiZivot = () => {
               className="flex items-center justify-center gap-2 mb-4"
             >
               <span className="text-xs sm:text-sm font-extrabold text-red-400 tracking-wider uppercase">
-                Máte před sebou nejtěžší rozhodnutí počátečního rodičovství
+                Máte před sebou nejtěžší rozhodnutí na začátku rodičovství
               </span>
             </motion.div>
 
