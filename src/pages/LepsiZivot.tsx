@@ -225,20 +225,21 @@ const LepsiZivot = () => {
         </div>
       </header>
 
-      {/* Hero — bold sans nadpis v duchu reklamní kreativy, bez fotky */}
-      <section className="relative overflow-hidden bg-primary">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_80%_0%,hsl(215_35%_35%/0.6),transparent_60%)]" />
+      {/* Hero — stark direct-response styl: tmavé pozadí, tvrdý kontrast, dilema jako centrální mechanismus */}
+      <section className="relative overflow-hidden bg-[#0a0a0f]">
+        <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_0%,hsl(0_60%_25%/0.35),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_50%_100%,hsl(38_65%_30%/0.25),transparent_60%)]" />
 
-        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 w-full">
-          <div className="max-w-xl mx-auto text-center">
+        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-14 md:py-20 relative z-10 w-full">
+          <div className="max-w-2xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center gap-2 mb-4"
             >
-              <span className="text-xs sm:text-sm font-bold text-accent tracking-wider uppercase">
-                Kalkulačka klidného spánku
+              <span className="text-xs sm:text-sm font-extrabold text-red-400 tracking-wider uppercase">
+                Rozhodnutí, které nejde vzít zpátky
               </span>
             </motion.div>
 
@@ -246,21 +247,38 @@ const LepsiZivot = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.05] mb-5 tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-body font-extrabold text-white leading-[1.1] mb-7 tracking-tight"
             >
-              Máte vyhlídnutý nový domov.{" "}
-              <span className="text-accent">Zvládnete ho i s miminkem na cestě?</span>
+              Máte před sebou nejtěžší rozhodnutí počátečního rodičovství
             </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 mb-7"
+            >
+              <div className="bg-white/[0.06] border border-white/15 rounded-xl px-5 py-4">
+                <p className="text-white font-bold text-base sm:text-lg leading-snug">
+                  Vzít si hypotéku na 30 let a modlit se, že to na rodičovské zvládnete?
+                </p>
+              </div>
+              <span className="text-xs font-extrabold text-white/50 tracking-widest uppercase py-1">nebo</span>
+              <div className="bg-white/[0.06] border border-white/15 rounded-xl px-5 py-4">
+                <p className="text-white font-bold text-base sm:text-lg leading-snug">
+                  Odsoudit rodinu na doživotí v nájmu?
+                </p>
+              </div>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg text-white/90 leading-relaxed mb-7 font-medium"
+              className="text-lg sm:text-xl text-white leading-relaxed mb-8 font-bold"
             >
-              Zjistěte do 48 hodin vaše přesné <span className="text-accent font-bold">bezpečné číslo</span> hypotéky
-              na rodičovské – od mamky dvou dětí, co ví, jaké je to počítat každou korunu.{" "}
-              <span className="text-accent font-bold">Zdarma</span>, bez jediného telefonátu navíc.
+              Zjistěte do 48 hodin vaše přesné <span className="text-accent">BEZPEČNÉ číslo</span> hypotéky na
+              rodičovské.
             </motion.p>
 
             <motion.div
@@ -274,6 +292,9 @@ const LepsiZivot = () => {
               >
                 Chci své bezpečné číslo zdarma
               </button>
+              <p className="mt-4 text-xs sm:text-sm text-white/50">
+                Zdarma, bez jediného telefonátu navíc.
+              </p>
             </motion.div>
           </div>
         </div>
