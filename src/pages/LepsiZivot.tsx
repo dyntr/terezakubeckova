@@ -425,34 +425,8 @@ const LepsiZivot = () => {
         </div>
       </section>
 
-      {/* Reference — hned pod nástrojem, stejná sekce jako na hlavní stránce */}
-      <ReviewsSection />
-
-      {/* Partneři napříč trhem */}
-      <PartnersSection />
-
-      {/* Certifikace ČNB */}
-      <CertificatesSection />
-
-      {/* Scéna z prohlídky nemovitosti — krátký emoční úvod */}
-      <section className="section-padding bg-background pb-8 md:pb-10">
-        <div className="container-narrow mx-auto max-w-3xl text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl text-foreground leading-relaxed"
-          >
-            To bydlení se vám líbilo — dům se zahradou, nebo byt, ve kterém by se konečně narovnala záda. Už jste si
-            představovali, kde bude stát postýlka. Jenže cestou domů v autě nastalo ticho — protože v hlavě vám
-            běžela matematika, kterou vám žádná bankovní kalkulačka nespočítá. My ji spočítáme za vás.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* "Poznáváte se?" — checklist, který zrcadlí konkrétní obavy z reklam */}
-      <section className="section-padding bg-secondary pt-8 md:pt-10" ref={recognitionRef}>
+      {/* "Poznáváte se?" — checklist, který zrcadlí konkrétní obavy z reklam — hned pod nástrojem, ještě před referencemi */}
+      <section className="section-padding bg-secondary" ref={recognitionRef}>
         <div className="container-narrow mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -491,6 +465,15 @@ const LepsiZivot = () => {
           </div>
         </div>
       </section>
+
+      {/* Reference — stejná sekce jako na hlavní stránce */}
+      <ReviewsSection />
+
+      {/* Partneři napříč trhem */}
+      <PartnersSection />
+
+      {/* Certifikace ČNB */}
+      <CertificatesSection />
 
       {/* Pull quote — hlavní argument proč teď a proč nezávisle */}
       <section className="bg-primary py-12 md:py-16">
