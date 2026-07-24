@@ -239,7 +239,7 @@ const LepsiZivot = () => {
               className="flex items-center justify-center gap-2 mb-4"
             >
               <span className="text-xs sm:text-sm font-extrabold text-red-400 tracking-wider uppercase">
-                Rozhodnutí, které nejde vzít zpátky
+                Máte před sebou nejtěžší rozhodnutí počátečního rodičovství
               </span>
             </motion.div>
 
@@ -247,39 +247,11 @@ const LepsiZivot = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-body font-extrabold text-white leading-[1.1] mb-7 tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-body font-extrabold text-white leading-[1.15] mb-8 tracking-tight"
             >
-              Máte před sebou nejtěžší rozhodnutí počátečního rodičovství
+              Vzít si hypotéku na 30 let a modlit se, že to na rodičovské zvládnete? Nebo odsoudit rodinu na doživotí
+              v nájmu?
             </motion.h1>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 mb-7"
-            >
-              <div className="bg-white/[0.06] border border-white/15 rounded-xl px-5 py-4">
-                <p className="text-white font-bold text-base sm:text-lg leading-snug">
-                  Vzít si hypotéku na 30 let a modlit se, že to na rodičovské zvládnete?
-                </p>
-              </div>
-              <span className="text-xs font-extrabold text-white/50 tracking-widest uppercase py-1">nebo</span>
-              <div className="bg-white/[0.06] border border-white/15 rounded-xl px-5 py-4">
-                <p className="text-white font-bold text-base sm:text-lg leading-snug">
-                  Odsoudit rodinu na doživotí v nájmu?
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg sm:text-xl text-white leading-relaxed mb-8 font-bold"
-            >
-              Zjistěte do 48 hodin vaše přesné <span className="text-accent">BEZPEČNÉ číslo</span> hypotéky na
-              rodičovské.
-            </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -288,9 +260,9 @@ const LepsiZivot = () => {
             >
               <button
                 onClick={scrollToForm}
-                className="gold-gradient cta-glow text-accent-foreground px-8 py-4 rounded-xl text-base font-extrabold uppercase tracking-wide hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
+                className="gold-gradient cta-glow text-accent-foreground px-8 py-5 rounded-xl text-base sm:text-lg font-extrabold leading-snug hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
-                Chci své bezpečné číslo zdarma
+                Zjistěte do 48 hodin vaše přesné BEZPEČNÉ číslo hypotéky na rodičovské.
               </button>
               <p className="mt-4 text-xs sm:text-sm text-white/50">
                 Zdarma, bez jediného telefonátu navíc.
