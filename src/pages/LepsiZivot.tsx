@@ -262,10 +262,10 @@ const LepsiZivot = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-5 rounded-xl text-base sm:text-lg font-extrabold leading-snug hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
-                Zjistěte do 48 hodin vaše přesné BEZPEČNÉ číslo hypotéky na rodičovské.
+                Chci zjistit do 24 hodin moji přesnou BEZPEČNOU splátku hypotéky na rodičovské
               </button>
               <p className="mt-4 text-xs sm:text-sm text-white/50">
-                Zdarma, bez jediného telefonátu navíc.
+                Dnes zcela zdarma
               </p>
             </motion.div>
           </div>
