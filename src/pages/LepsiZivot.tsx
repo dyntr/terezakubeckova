@@ -79,24 +79,23 @@ const recognitionGroups = [
 
 const questions = [
   {
-    key: "propertyPrice",
-    question: "Kolik stojí nemovitost, o kterou máte zájem?",
-    options: ["Do 4 mil. Kč", "4–6 mil. Kč", "6–8 mil. Kč", "Přes 8 mil. Kč"],
+    key: "situace",
+    question: "V jaké fázi se právě nacházíte?",
+    options: [
+      "Plánujeme rodinu a hledáme bydlení",
+      "Čekáme miminko (jsem těhotná)",
+      "Už jsme na rodičovské a chceme vyřešit bydlení",
+    ],
   },
   {
-    key: "savings",
-    question: "Kolik máte našetřeno na vlastní zdroje?",
-    options: ["Méně než 300 tis. Kč", "300–700 tis. Kč", "700 tis.–1,5 mil. Kč", "Přes 1,5 mil. Kč"],
+    key: "prijem",
+    question: "Jaký je váš dnešní společný čistý příjem?",
+    options: ["do 60 000 Kč", "60 000 – 80 000 Kč", "80 000 – 110 000 Kč", "110 000 Kč a více"],
   },
   {
-    key: "income",
-    question: "Jaký je váš společný čistý měsíční příjem dnes?",
-    options: ["Do 60 000 Kč", "60 000–90 000 Kč", "90 000–120 000 Kč", "Přes 120 000 Kč"],
-  },
-  {
-    key: "timing",
-    question: "Kdy jeden z vás nastoupí na rodičovskou / čekáte miminko?",
-    options: ["Už jsme na rodičovské", "Do 3 měsíců", "Za 4–8 měsíců", "Za víc než 8 měsíců"],
+    key: "hypoteka",
+    question: "Jakou výši hypotéky orientačně zvažujete?",
+    options: ["do 4 mil. Kč", "4 – 6 mil. Kč", "6 – 8 mil. Kč", "Více než 8 mil. Kč / Nevím, chci poradit"],
   },
 ] as const;
 
@@ -113,10 +112,9 @@ const LepsiZivot = () => {
 
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({
-    propertyPrice: "",
-    savings: "",
-    income: "",
-    timing: "",
+    situace: "",
+    prijem: "",
+    hypoteka: "",
   });
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -157,10 +155,9 @@ const LepsiZivot = () => {
         name: form.name,
         email: form.email,
         phone: form.phone,
-        cena_nemovitosti: answers.propertyPrice,
-        uspory: answers.savings,
-        prijem: answers.income,
-        terminace_rodicovske: answers.timing,
+        situace: answers.situace,
+        prijem: answers.prijem,
+        hypoteka: answers.hypoteka,
         source: "/lepsi-zivot",
       };
 
@@ -170,7 +167,7 @@ const LepsiZivot = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: "Kalkulačka klidného spánku – bezpečné číslo (/lepsi-zivot)",
+            subject: "Bezpečná splátka na rodičovské (/lepsi-zivot)",
             ...payload,
           }),
         }),
@@ -183,9 +180,9 @@ const LepsiZivot = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Odpovědi odeslány! Do 48 hodin vám pošlu vaše bezpečné číslo.");
+        toast.success("Odpovědi odeslány! Do 24 hodin vám pošlu vaši bezpečnou splátku.");
         setForm({ name: "", email: "", phone: "" });
-        setAnswers({ propertyPrice: "", savings: "", income: "", timing: "" });
+        setAnswers({ situace: "", prijem: "", hypoteka: "" });
         setStep(0);
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
@@ -291,7 +288,7 @@ const LepsiZivot = () => {
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Zjistěte, jak to řeší rodiny přesně ve vaší situaci. Žádné papírování, žádný hovor navíc – jen pár
-              kliknutí. Vaše přesné bezpečné číslo hypotéky na rodičovské vám pošlu do 48 hodin.
+              kliknutí. Vaši přesnou bezpečnou splátku hypotéky na rodičovské vám pošlu do 24 hodin.
             </p>
           </motion.div>
 
@@ -359,13 +356,9 @@ const LepsiZivot = () => {
                   transition={{ duration: 0.25 }}
                   className="space-y-4 sm:space-y-5"
                 >
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-2 text-center">
-                    Skoro hotovo — kam vám mám poslat vaše bezpečné číslo?
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4 text-center">
+                    Kam vám máme poslat vaši BEZPEČNOU splátku a simulaci rozpočtu?
                   </h3>
-                  <p className="text-sm text-muted-foreground text-center mb-4">
-                    Vaše čísla už mám. Nechte mi na sebe kontakt a do 48 hodin budete mít svoje přesné bezpečné
-                    číslo.
-                  </p>
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
@@ -401,6 +394,9 @@ const LepsiZivot = () => {
                       {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
                     </div>
                   </div>
+                  <p className="text-xs text-muted-foreground -mt-2">
+                    Slibujeme, že vám budeme volat pouze pro ujasnění detailů k propočtu, žádný spam.
+                  </p>
 
                   <button
                     type="submit"
@@ -412,8 +408,12 @@ const LepsiZivot = () => {
                     ) : (
                       <Send size={20} />
                     )}
-                    {sending ? "Odesílám…" : "Chci své bezpečné číslo zdarma"}
+                    {sending ? "Odesílám…" : "Chci znát moji bezpečnou splátku →"}
                   </button>
+
+                  <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                    🔒 Vaše údaje jsou 100% v bezpečí. Výsledek vám zpracujeme a pošleme do 24 hodin.
+                  </p>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
                     Odesláním souhlasíte se{" "}
@@ -421,13 +421,6 @@ const LepsiZivot = () => {
                       zpracováním osobních údajů
                     </Link>{" "}
                     za účelem vyřízení poptávky.
-                  </p>
-
-                  <p className="text-center text-xs text-muted-foreground pt-1">
-                    Nebo rovnou zavolejte:{" "}
-                    <a href="tel:+420775303314" className="text-accent hover:underline font-medium">
-                      775 303 314
-                    </a>
                   </p>
                 </motion.form>
               )}
