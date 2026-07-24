@@ -233,9 +233,9 @@ const LepsiZivot = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center justify-center gap-2 mb-4"
+              className="flex items-center justify-center gap-2 mb-6"
             >
-              <span className="text-xs sm:text-sm font-extrabold text-red-400 tracking-wider uppercase">
+              <span className="text-sm sm:text-base font-extrabold text-red-400 tracking-wider uppercase">
                 Máte před sebou nejtěžší rozhodnutí na začátku rodičovství
               </span>
             </motion.div>
@@ -244,7 +244,7 @@ const LepsiZivot = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-body font-extrabold text-white leading-[1.15] mb-8 tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.15] mb-10 tracking-tight"
             >
               Vzít si hypotéku na 30 let a modlit se, že to na rodičovské zvládnete? Nebo odsoudit rodinu na doživotí
               v nájmu?
