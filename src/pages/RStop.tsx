@@ -24,12 +24,12 @@ declare global {
 }
 
 const recognitionItems = [
-  "Banka vám ráda schválí 7 milionů. Nezajímá ji, jestli je utáhnete i na rodičovské.",
+  "Schválí vám 7 milionů na dnešní příjem. Nikdo se nezeptá, jestli je utáhnete i na rodičovské.",
   "Nikdo vám neukázal výpočet, který počítá s bezpečnou splátkou – jen s tou nejvyšší možnou.",
   "Hypotéka se nepodepisuje na 30 let. Podepisuje se na první 3 roky s dítětem.",
   "Myslíte si, že máte rezervu. Poznáte to, až přijde první výplata jen z rodičovské.",
   "Vaše dnešní „jistota“ dvou platů zmizí ve chvíli, kdy jeden z vás nastoupí na mateřskou.",
-  "Bance je jedno, že budete mít dítě na plenkách. Ona chce vaše úroky.",
+  "Standardnímu výpočtu je jedno, že budete mít dítě na plenkách. Počítá jen s tím, co vyděláváte dnes.",
 ];
 
 const questions = [
@@ -185,7 +185,7 @@ const RStop = () => {
               className="flex items-center justify-center gap-2 mb-6"
             >
               <span className="text-sm sm:text-base font-extrabold text-red-400 tracking-wider uppercase">
-                Banka vám nikdy neřekne tohle číslo.
+                Tohle číslo vám žádná kalkulačka nespočítá.
               </span>
             </motion.div>
 
@@ -195,7 +195,8 @@ const RStop = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.15] mb-8 tracking-tight"
             >
-              Hypotéku vám schválí na dnešní dva platy. Jestli ji utáhnete i s jedním a miminkem navíc, banku nezajímá.
+              Hypotéku vám spočítají na dnešní dva platy. Jestli ji utáhnete i s jedním a miminkem navíc, to už
+              nespočítá nikdo.
             </motion.h1>
 
             <motion.p
@@ -204,8 +205,8 @@ const RStop = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base sm:text-lg text-white/60 mb-10 leading-relaxed"
             >
-              R-STOP je jedno číslo: nejvyšší splátka, kterou bezpečně utáhnete i na rodičovské. Spočítám vám ho za 60
-              vteřin – zdarma.
+              R-STOP (odborně DTI2) je jedno číslo: nejvyšší splátka, kterou bezpečně utáhnete i na rodičovské.
+              Spočítám vám ho za 60 vteřin – zdarma.
             </motion.p>
 
             <motion.div
@@ -235,9 +236,9 @@ const RStop = () => {
             transition={{ duration: 0.6 }}
             className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground leading-snug"
           >
-            Algoritmus banky chce, abyste si vzali <span className="text-gradient-gold">maximum</span>.
+            Standardní kalkulačka počítá s tím, co máte <span className="text-gradient-gold">dnes</span>.
             <br />
-            R-STOP existuje proto, abyste si vzali <span className="text-gradient-gold">bezpečně</span>.
+            R-STOP (DTI2) počítá s tím, co přijde <span className="text-gradient-gold">za rok</span>.
           </motion.p>
         </div>
       </section>
