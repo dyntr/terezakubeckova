@@ -189,7 +189,7 @@ const RStop = () => {
   };
 
   const inputClass =
-    "w-full bg-background border border-border rounded-lg px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-shadow";
+    "w-full bg-white/5 border-2 border-white/15 rounded-lg px-4 py-3 text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/50 transition-shadow";
 
   const totalSteps = questions.length + 1;
   const progressPct = ((step + 1) / totalSteps) * 100;
@@ -197,18 +197,18 @@ const RStop = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Minimal header */}
-      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
+      {/* Minimal header — ostrý, tmavý, žádný soft glass */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b-2 border-accent/30">
         <div className="container-narrow mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             <TKLogo className="w-7 h-7 sm:w-8 sm:h-8 text-accent flex-shrink-0" />
-            <span className="font-heading text-base sm:text-lg md:text-xl font-semibold text-foreground truncate">
+            <span className="font-heading text-base sm:text-lg md:text-xl font-bold text-white truncate">
               Tereza <span className="hidden sm:inline text-gradient-gold">Kubečková</span>
             </span>
           </Link>
           <button
             onClick={scrollToForm}
-            className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
+            className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-bold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
             <span className="sm:hidden">Můj R-STOP (DTI2)</span>
             <span className="hidden sm:inline">Chci znát svůj R-STOP (DTI2)</span>
@@ -229,7 +229,7 @@ const RStop = () => {
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center gap-2 mb-6"
             >
-              <span className="text-sm sm:text-base font-extrabold text-red-400 tracking-wider uppercase">
+              <span className="inline-block bg-red-500/10 border-2 border-red-500/40 text-red-400 px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
                 Tohle číslo vám žádná kalkulačka nespočítá.
               </span>
             </motion.div>
@@ -238,7 +238,7 @@ const RStop = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.15] mb-8 tracking-tight"
+              className="text-4xl sm:text-5xl md:text-7xl font-body font-black text-white leading-[1.1] mb-8 tracking-tight"
             >
               Hypotéku vám spočítají na dnešní dva platy. Jestli ji utáhnete i s jedním a miminkem navíc, to už
               nespočítá nikdo.
@@ -279,7 +279,7 @@ const RStop = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground leading-snug"
+            className="text-2xl md:text-4xl font-heading font-black text-primary-foreground leading-snug"
           >
             Standardní kalkulačka počítá s tím, co máte <span className="text-gradient-gold">dnes</span>.
             <br />
@@ -288,9 +288,10 @@ const RStop = () => {
         </div>
       </section>
 
-      {/* Nástroj — R-STOP test */}
-      <section id="r-stop-test" className="section-padding bg-background" ref={toolRef}>
-        <div className="container-narrow mx-auto max-w-2xl">
+      {/* Nástroj — R-STOP test — tmavá plocha navazující na hero, žádný soft glass */}
+      <section id="r-stop-test" className="section-padding bg-[#0a0a0f] relative overflow-hidden" ref={toolRef}>
+        <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_0%,hsl(38_65%_30%/0.12),transparent_60%)]" />
+        <div className="container-narrow mx-auto max-w-2xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={toolInView ? { opacity: 1, y: 0 } : {}}
@@ -298,12 +299,12 @@ const RStop = () => {
             className="text-center mb-10"
           >
             <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-sm font-medium text-accent tracking-wider uppercase">
+              <span className="text-sm font-bold text-accent tracking-wider uppercase">
                 3 kliknutí. Žádné papírování. Jedno číslo.
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">R-STOP (DTI2) test</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
+            <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-4">R-STOP (DTI2) test</h2>
+            <p className="text-white/50 max-w-xl mx-auto text-sm sm:text-base">
               Odpovězte na 3 rychlé otázky a svůj R-STOP (DTI2) – bezpečnou splátku, se kterou přežijete rodičovskou
               bez stresu – uvidíte hned tady na obrazovce.
             </p>
@@ -313,7 +314,7 @@ const RStop = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={toolInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-5 sm:p-8"
+            className="rounded-xl border-2 border-accent/25 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8"
           >
             {/* Progress bar */}
             <div className="flex items-center gap-3 mb-6 sm:mb-8">
@@ -322,19 +323,19 @@ const RStop = () => {
                   type="button"
                   onClick={goBack}
                   aria-label="Zpět"
-                  className="flex-shrink-0 p-1.5 rounded-lg text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
+                  className="flex-shrink-0 p-1.5 rounded-lg text-white/40 hover:text-accent hover:bg-white/5 transition-colors"
                 >
                   <ChevronLeft size={20} />
                 </button>
               )}
-              <div className="flex-1 h-1.5 rounded-full bg-border overflow-hidden">
+              <div className="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
                 <motion.div
                   className="h-full gold-gradient rounded-full"
                   animate={{ width: `${progressPct}%` }}
                   transition={{ duration: 0.4 }}
                 />
               </div>
-              <span className="flex-shrink-0 text-xs font-medium text-muted-foreground tabular-nums">
+              <span className="flex-shrink-0 text-xs font-bold text-white/40 tabular-nums">
                 {Math.min(step + 1, totalSteps)}/{totalSteps}
               </span>
             </div>
@@ -347,7 +348,7 @@ const RStop = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-6 text-center">
+                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-6 text-center">
                     {currentQuestion.question}
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-3">
@@ -356,7 +357,7 @@ const RStop = () => {
                         key={option}
                         type="button"
                         onClick={() => selectAnswer(currentQuestion.key, option)}
-                        className="text-left px-5 py-4 rounded-xl border-2 border-border bg-background hover:border-accent hover:bg-accent/5 transition-all font-medium text-foreground active:scale-[0.98]"
+                        className="text-left px-5 py-4 rounded-lg border-2 border-white/10 bg-white/[0.02] hover:border-accent hover:bg-accent/10 transition-all font-bold text-white active:scale-[0.98]"
                       >
                         {option}
                       </button>
@@ -376,7 +377,7 @@ const RStop = () => {
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.35 }}
-                      className="rounded-2xl border border-accent/30 bg-[#0a0a0f] p-6 sm:p-8 text-center"
+                      className="rounded-xl border-2 border-accent/50 bg-black p-6 sm:p-8 text-center"
                     >
                       <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mb-2">
                         Váš orientační výsledek
@@ -447,26 +448,26 @@ const RStop = () => {
                       transition={{ duration: 0.25 }}
                       className="space-y-4 sm:space-y-5"
                     >
-                      <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-1 text-center">
+                      <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-1 text-center">
                         Kam vám mám poslat přesný R-STOP (DTI2)?
                       </h3>
-                      <p className="text-center text-sm text-muted-foreground mb-3">
+                      <p className="text-center text-sm text-white/50 mb-3">
                         Individuální propočet a plán vám osobně připravím do 24 hodin.
                       </p>
 
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
+                        <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
                         <input
                           value={form.name}
                           onChange={(e) => update("name", e.target.value)}
                           className={inputClass}
                           placeholder="Jana Nováková"
                         />
-                        {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+                        {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
                       </div>
                       <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
+                          <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
                           <input
                             type="email"
                             value={form.email}
@@ -474,10 +475,10 @@ const RStop = () => {
                             className={inputClass}
                             placeholder="jana@email.cz"
                           />
-                          {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
+                          {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
+                          <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
                           <input
                             value={form.phone}
                             onChange={(e) => update("phone", e.target.value)}
@@ -485,7 +486,7 @@ const RStop = () => {
                             placeholder="+420 xxx xxx xxx"
                             inputMode="tel"
                           />
-                          {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+                          {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
                         </div>
                       </div>
                       <button
@@ -501,11 +502,11 @@ const RStop = () => {
                         {sending ? "Odesílám…" : "Odeslat a získat přesný plán →"}
                       </button>
 
-                      <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                      <p className="text-center text-xs text-white/40 leading-relaxed">
                         🔒 Vaše údaje jsou 100% v bezpečí. Přesný R-STOP (DTI2) na míru vám pošleme do 24 hodin.
                       </p>
 
-                      <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                      <p className="text-center text-xs text-white/40 leading-relaxed">
                         Odesláním souhlasíte se{" "}
                         <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
                           zpracováním osobních údajů
@@ -521,8 +522,8 @@ const RStop = () => {
         </div>
       </section>
 
-      {/* Poznáváte se? — jeden přímý seznam, žádné kategorie navíc */}
-      <section className="section-padding bg-secondary" ref={recognitionRef}>
+      {/* Poznáváte se? — tmavý "rap sheet" seznam, žádné kulaté karty */}
+      <section className="section-padding bg-[#0a0a0f]" ref={recognitionRef}>
         <div className="container-narrow mx-auto max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -530,7 +531,7 @@ const RStop = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+            <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-4">
               Poznáváte se v některé z těchto vět?
             </h2>
           </motion.div>
@@ -539,13 +540,13 @@ const RStop = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="glass-card p-6 sm:p-8"
+            className="rounded-xl border-2 border-white/10 bg-white/[0.02] p-6 sm:p-8"
           >
             <ul className="space-y-4">
               {recognitionItems.map((item) => (
-                <li key={item} className="flex items-start gap-3">
+                <li key={item} className="flex items-start gap-3 border-l-4 border-red-500/50 pl-4 py-1">
                   <Ban size={18} className="text-red-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base text-foreground leading-relaxed">„{item}“</span>
+                  <span className="text-sm sm:text-base text-white/90 font-medium leading-relaxed">„{item}“</span>
                 </li>
               ))}
             </ul>
@@ -559,13 +560,13 @@ const RStop = () => {
           >
             <div className="flex items-center justify-center gap-2 mb-3">
               <Check size={18} className="text-accent" />
-              <span className="text-sm sm:text-base font-semibold text-foreground">
+              <span className="text-sm sm:text-base font-bold text-white">
                 R-STOP (DTI2) vám dá jasné číslo místo špatného pocitu.
               </span>
             </div>
             <button
               onClick={scrollToForm}
-              className="gold-gradient text-accent-foreground px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold uppercase tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98]"
+              className="gold-gradient cta-glow text-accent-foreground px-6 py-3.5 rounded-lg text-sm sm:text-base font-bold uppercase tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98]"
             >
               Spočítat můj R-STOP (DTI2) →
             </button>
