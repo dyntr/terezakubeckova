@@ -116,7 +116,7 @@ const RStop = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: "R-STOP – bezpečná splátka (/r-stop)",
+            subject: "R-STOP (DTI2) – bezpečná splátka (/r-stop)",
             ...payload,
           }),
         }),
@@ -129,7 +129,7 @@ const RStop = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Odesláno! Do 24 hodin vám pošlu váš R-STOP.");
+        toast.success("Odesláno! Do 24 hodin vám pošlu váš R-STOP (DTI2).");
         setForm({ name: "", email: "", phone: "" });
         setAnswers({ situace: "", prijem: "", hypoteka: "" });
         setStep(0);
@@ -165,8 +165,8 @@ const RStop = () => {
             onClick={scrollToForm}
             className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
           >
-            <span className="sm:hidden">Můj R-STOP</span>
-            <span className="hidden sm:inline">Chci znát svůj R-STOP</span>
+            <span className="sm:hidden">Můj R-STOP (DTI2)</span>
+            <span className="hidden sm:inline">Chci znát svůj R-STOP (DTI2)</span>
           </button>
         </div>
       </header>
@@ -218,7 +218,7 @@ const RStop = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-5 rounded-xl text-base sm:text-lg font-extrabold leading-snug hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
-                Spočítat můj R-STOP zdarma →
+                Spočítat můj R-STOP (DTI2) zdarma →
               </button>
               <p className="mt-4 text-xs sm:text-sm text-white/50">Bez závazků. Výsledek do 24 hodin.</p>
             </motion.div>
@@ -257,10 +257,10 @@ const RStop = () => {
                 3 kliknutí. Žádné papírování. Jedno číslo.
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">R-STOP test</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">R-STOP (DTI2) test</h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Odpovězte na 3 rychlé otázky. Do 24 hodin vám pošlu váš přesný R-STOP – bezpečnou splátku, se kterou
-              přežijete rodičovskou bez stresu.
+              Odpovězte na 3 rychlé otázky. Do 24 hodin vám pošlu váš přesný R-STOP (DTI2) – bezpečnou splátku, se
+              kterou přežijete rodičovskou bez stresu.
             </p>
           </motion.div>
 
@@ -329,7 +329,7 @@ const RStop = () => {
                   className="space-y-4 sm:space-y-5"
                 >
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4 text-center">
-                    Kam vám mám poslat váš R-STOP?
+                    Kam vám mám poslat váš R-STOP (DTI2)?
                   </h3>
 
                   <div>
@@ -376,7 +376,7 @@ const RStop = () => {
                     ) : (
                       <Send size={20} />
                     )}
-                    {sending ? "Odesílám…" : "Chci znát svůj R-STOP →"}
+                    {sending ? "Odesílám…" : "Chci znát svůj R-STOP (DTI2) →"}
                   </button>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
@@ -436,14 +436,14 @@ const RStop = () => {
             <div className="flex items-center justify-center gap-2 mb-3">
               <Check size={18} className="text-accent" />
               <span className="text-sm sm:text-base font-semibold text-foreground">
-                R-STOP vám dá jasné číslo místo špatného pocitu.
+                R-STOP (DTI2) vám dá jasné číslo místo špatného pocitu.
               </span>
             </div>
             <button
               onClick={scrollToForm}
               className="gold-gradient text-accent-foreground px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold uppercase tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98]"
             >
-              Spočítat můj R-STOP →
+              Spočítat můj R-STOP (DTI2) →
             </button>
           </motion.div>
         </div>
