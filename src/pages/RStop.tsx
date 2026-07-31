@@ -1,0 +1,459 @@
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Send, ChevronLeft, Check, Ban } from "lucide-react";
+import TKLogo from "@/components/TKLogo";
+import ReviewsSection from "@/components/ReviewsSection";
+import Footer from "@/components/Footer";
+
+const leadSchema = z.object({
+  name: z.string().trim().min(1, "Vyplňte jméno").max(100),
+  email: z.string().trim().email("Zadejte platný e-mail").max(255),
+  phone: z.string().trim().min(9, "Zadejte platné číslo").max(20),
+});
+
+const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
+const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/1mm2ym4r8qw9bh521kt6eb75qdljxbht";
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+const recognitionItems = [
+  "Banka vám ráda schválí 7 milionů. Nezajímá ji, jestli je utáhnete i na rodičovské.",
+  "Nikdo vám neukázal výpočet, který počítá s bezpečnou splátkou – jen s tou nejvyšší možnou.",
+  "Hypotéka se nepodepisuje na 30 let. Podepisuje se na první 3 roky s dítětem.",
+  "Myslíte si, že máte rezervu. Poznáte to, až přijde první výplata jen z rodičovské.",
+  "Vaše dnešní „jistota“ dvou platů zmizí ve chvíli, kdy jeden z vás nastoupí na mateřskou.",
+  "Bance je jedno, že budete mít dítě na plenkách. Ona chce vaše úroky.",
+];
+
+const questions = [
+  {
+    key: "situace",
+    question: "V jaké fázi jste teď?",
+    options: [
+      "Hypotéku teprve řešíme, dítě plánujeme",
+      "Čekáme miminko a hypotéku už máme/řešíme",
+      "Jsme na rodičovské a hypotéku už splácíme",
+    ],
+  },
+  {
+    key: "prijem",
+    question: "Jaký je váš dnešní společný čistý příjem?",
+    options: ["do 60 000 Kč", "60 000 – 80 000 Kč", "80 000 – 110 000 Kč", "110 000 Kč a více"],
+  },
+  {
+    key: "hypoteka",
+    question: "Jakou výši hypotéky řešíte?",
+    options: ["do 4 mil. Kč", "4 – 6 mil. Kč", "6 – 8 mil. Kč", "Více než 8 mil. Kč / Nevím, chci poradit"],
+  },
+] as const;
+
+type AnswerKey = (typeof questions)[number]["key"];
+type Answers = Record<AnswerKey, string>;
+
+const RStop = () => {
+  const recognitionRef = useRef(null);
+  const toolRef = useRef(null);
+  const recognitionInView = useInView(recognitionRef, { once: true, margin: "-100px" });
+  const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
+
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({ situace: "", prijem: "", hypoteka: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sending, setSending] = useState(false);
+
+  const update = (field: string, value: string) => {
+    setForm((f) => ({ ...f, [field]: value }));
+    if (errors[field]) setErrors((e) => ({ ...e, [field]: "" }));
+  };
+
+  const scrollToForm = () => {
+    document.querySelector("#r-stop-test")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const selectAnswer = (key: AnswerKey, value: string) => {
+    setAnswers((a) => ({ ...a, [key]: value }));
+    setStep((s) => s + 1);
+  };
+
+  const goBack = () => setStep((s) => Math.max(0, s - 1));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = leadSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        fieldErrors[issue.path[0] as string] = issue.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+    setErrors({});
+    setSending(true);
+
+    try {
+      const payload = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        situace: answers.situace,
+        prijem: answers.prijem,
+        hypoteka: answers.hypoteka,
+        source: "/r-stop",
+      };
+
+      const [web3Res] = await Promise.allSettled([
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: "R-STOP – bezpečná splátka (/r-stop)",
+            ...payload,
+          }),
+        }),
+        fetch(MAKE_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: new URLSearchParams(payload),
+        }),
+      ]);
+
+      if (web3Res.status === "fulfilled" && web3Res.value.ok) {
+        window.fbq?.("track", "Lead");
+        toast.success("Odesláno! Do 24 hodin vám pošlu váš R-STOP.");
+        setForm({ name: "", email: "", phone: "" });
+        setAnswers({ situace: "", prijem: "", hypoteka: "" });
+        setStep(0);
+      } else {
+        toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
+      }
+    } catch {
+      toast.error("Chyba při odesílání. Zkuste to prosím znovu.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const inputClass =
+    "w-full bg-background border border-border rounded-lg px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-shadow";
+
+  const totalSteps = questions.length + 1;
+  const progressPct = ((step + 1) / totalSteps) * 100;
+  const currentQuestion = step < questions.length ? questions[step] : null;
+
+  return (
+    <div className="min-h-screen">
+      {/* Minimal header */}
+      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
+        <div className="container-narrow mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
+          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <TKLogo className="w-7 h-7 sm:w-8 sm:h-8 text-accent flex-shrink-0" />
+            <span className="font-heading text-base sm:text-lg md:text-xl font-semibold text-foreground truncate">
+              Tereza <span className="hidden sm:inline text-gradient-gold">Kubečková</span>
+            </span>
+          </Link>
+          <button
+            onClick={scrollToForm}
+            className="inline-flex flex-shrink-0 items-center gap-2 gold-gradient text-accent-foreground px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
+          >
+            <span className="sm:hidden">Můj R-STOP</span>
+            <span className="hidden sm:inline">Chci znát svůj R-STOP</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Hero — jedno tvrdé tvrzení, jedna nabídka, jeden CTA */}
+      <section className="relative overflow-hidden bg-[#0a0a0f]">
+        <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_0%,hsl(0_60%_25%/0.35),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_50%_100%,hsl(38_65%_30%/0.25),transparent_60%)]" />
+
+        <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 w-full">
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center justify-center gap-2 mb-6"
+            >
+              <span className="text-sm sm:text-base font-extrabold text-red-400 tracking-wider uppercase">
+                Banka vám nikdy neřekne tohle číslo.
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-body font-extrabold text-white leading-[1.15] mb-8 tracking-tight"
+            >
+              Hypotéku vám schválí na dnešní dva platy. Jestli ji utáhnete i s jedním a miminkem navíc, banku nezajímá.
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-base sm:text-lg text-white/60 mb-10 leading-relaxed"
+            >
+              R-STOP je jedno číslo: nejvyšší splátka, kterou bezpečně utáhnete i na rodičovské. Spočítám vám ho za 60
+              vteřin – zdarma.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <button
+                onClick={scrollToForm}
+                className="gold-gradient cta-glow text-accent-foreground px-8 py-5 rounded-xl text-base sm:text-lg font-extrabold leading-snug hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
+              >
+                Spočítat můj R-STOP zdarma →
+              </button>
+              <p className="mt-4 text-xs sm:text-sm text-white/50">Bez závazků. Výsledek do 24 hodin.</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mechanismus — proč na tom záleží, kanál existující nedůvěry k bance */}
+      <section className="bg-primary py-12 md:py-16">
+        <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground leading-snug"
+          >
+            Algoritmus banky chce, abyste si vzali <span className="text-gradient-gold">maximum</span>.
+            <br />
+            R-STOP existuje proto, abyste si vzali <span className="text-gradient-gold">bezpečně</span>.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Nástroj — R-STOP test */}
+      <section id="r-stop-test" className="section-padding bg-background" ref={toolRef}>
+        <div className="container-narrow mx-auto max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={toolInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="text-sm font-medium text-accent tracking-wider uppercase">
+                3 kliknutí. Žádné papírování. Jedno číslo.
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">R-STOP test</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
+              Odpovězte na 3 rychlé otázky. Do 24 hodin vám pošlu váš přesný R-STOP – bezpečnou splátku, se kterou
+              přežijete rodičovskou bez stresu.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={toolInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="glass-card p-5 sm:p-8"
+          >
+            {/* Progress bar */}
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+              {step > 0 && (
+                <button
+                  type="button"
+                  onClick={goBack}
+                  aria-label="Zpět"
+                  className="flex-shrink-0 p-1.5 rounded-lg text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+              )}
+              <div className="flex-1 h-1.5 rounded-full bg-border overflow-hidden">
+                <motion.div
+                  className="h-full gold-gradient rounded-full"
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ duration: 0.4 }}
+                />
+              </div>
+              <span className="flex-shrink-0 text-xs font-medium text-muted-foreground tabular-nums">
+                {Math.min(step + 1, totalSteps)}/{totalSteps}
+              </span>
+            </div>
+
+            <>
+              {currentQuestion ? (
+                <motion.div
+                  key={currentQuestion.key}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-6 text-center">
+                    {currentQuestion.question}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {currentQuestion.options.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => selectAnswer(currentQuestion.key, option)}
+                        className="text-left px-5 py-4 rounded-xl border-2 border-border bg-background hover:border-accent hover:bg-accent/5 transition-all font-medium text-foreground active:scale-[0.98]"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="contact"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-4 sm:space-y-5"
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4 text-center">
+                    Kam vám mám poslat váš R-STOP?
+                  </h3>
+
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
+                    <input
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      className={inputClass}
+                      placeholder="Jana Nováková"
+                    />
+                    {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => update("email", e.target.value)}
+                        className={inputClass}
+                        placeholder="jana@email.cz"
+                      />
+                      {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
+                      <input
+                        value={form.phone}
+                        onChange={(e) => update("phone", e.target.value)}
+                        className={inputClass}
+                        placeholder="+420 xxx xxx xxx"
+                        inputMode="tel"
+                      />
+                      {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {sending ? (
+                      <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                    ) : (
+                      <Send size={20} />
+                    )}
+                    {sending ? "Odesílám…" : "Chci znát svůj R-STOP →"}
+                  </button>
+
+                  <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                    🔒 Vaše údaje jsou 100% v bezpečí. Výsledek vám zpracujeme a pošleme do 24 hodin.
+                  </p>
+
+                  <p className="text-center text-xs text-muted-foreground leading-relaxed">
+                    Odesláním souhlasíte se{" "}
+                    <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                      zpracováním osobních údajů
+                    </Link>{" "}
+                    za účelem vyřízení poptávky.
+                  </p>
+                </motion.form>
+              )}
+            </>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Poznáváte se? — jeden přímý seznam, žádné kategorie navíc */}
+      <section className="section-padding bg-secondary" ref={recognitionRef}>
+        <div className="container-narrow mx-auto max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              Poznáváte se v některé z těchto vět?
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="glass-card p-6 sm:p-8"
+          >
+            <ul className="space-y-4">
+              {recognitionItems.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <Ban size={18} className="text-red-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm sm:text-base text-foreground leading-relaxed">„{item}“</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={recognitionInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center mt-10"
+          >
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Check size={18} className="text-accent" />
+              <span className="text-sm sm:text-base font-semibold text-foreground">
+                R-STOP vám dá jasné číslo místo špatného pocitu.
+              </span>
+            </div>
+            <button
+              onClick={scrollToForm}
+              className="gold-gradient text-accent-foreground px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold uppercase tracking-wide hover:opacity-90 transition-opacity active:scale-[0.98]"
+            >
+              Spočítat můj R-STOP →
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Reference — důvěra, minimum ostatního */}
+      <ReviewsSection />
+
+      <Footer />
+    </div>
+  );
+};
+
+export default RStop;
