@@ -237,8 +237,8 @@ const RStop = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-7xl font-body font-black text-white leading-[1.1] mb-8 tracking-tight"
             >
-              Hypotéku vám spočítají z dnešních dvou platů. Jestli ji utáhnete i s miminkem a rodičákem, to už
-              nespočítá nikdo.
+              Hypotéku vám spočítají z dnešních dvou platů. Jestli ji utáhnete i s miminkem a rodičákem, to už nikdo
+              neřeší.
             </motion.h1>
 
             <motion.p
