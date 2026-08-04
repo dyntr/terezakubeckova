@@ -96,7 +96,7 @@ const RStop = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const result = useMemo(() => {
     const income = incomeMidpoint[answers.prijem];
@@ -126,7 +126,7 @@ const RStop = () => {
 
   const goBack = () => {
     setStep((s) => Math.max(0, s - 1));
-    setFormOpen(false);
+    setSubmitted(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -173,11 +173,8 @@ const RStop = () => {
 
       if (web3Res.status === "fulfilled" && web3Res.value.ok) {
         window.fbq?.("track", "Lead");
-        toast.success("Odesláno! Do 24 hodin vám pošlu přesný R-STOP (DTI2) na míru i s plánem.");
-        setForm({ name: "", email: "", phone: "" });
-        setAnswers({ situace: "", prijem: "", hypoteka: "" });
-        setStep(0);
-        setFormOpen(false);
+        toast.success("Odesláno! Tady je váš R-STOP (DTI2).");
+        setSubmitted(true);
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -364,158 +361,147 @@ const RStop = () => {
                     ))}
                   </div>
                 </motion.div>
-              ) : (
-                <motion.div
-                  key="result"
+              ) : !submitted ? (
+                <motion.form
+                  key="contact"
+                  onSubmit={handleSubmit}
+                  noValidate
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.25 }}
-                  className="space-y-6"
+                  className="space-y-4 sm:space-y-5"
                 >
-                  {result && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.96 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.35 }}
-                      className="rounded-xl border-2 border-accent/50 bg-black p-6 sm:p-8 text-center"
-                    >
-                      <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mb-2">
-                        Váš orientační výsledek
-                      </p>
-                      <p className="text-sm sm:text-base text-white/60 mb-6">
-                        R-STOP (DTI2) — bezpečná splátka na rodičovské
-                      </p>
+                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-1 text-center">
+                    Ještě jeden krok a uvidíte svůj R-STOP (DTI2)
+                  </h3>
+                  <p className="text-center text-sm text-white/50 mb-3">
+                    Zadejte kontakt – výsledek se zobrazí hned tady na obrazovce. Přesné číslo na míru vám pak do 24
+                    hodin ještě upřesním.
+                  </p>
 
-                      <div className="text-5xl sm:text-6xl md:text-7xl font-black text-gradient-gold leading-none mb-2 tabular-nums">
-                        {formatKc(result.rStop)}
-                      </div>
-                      <p className="text-white/40 text-xs sm:text-sm mb-8">měsíčně</p>
+                  <div>
+                    <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
+                    <input
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      className={inputClass}
+                      placeholder="Jana Nováková"
+                    />
+                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                    <div>
+                      <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => update("email", e.target.value)}
+                        className={inputClass}
+                        placeholder="jana@email.cz"
+                      />
+                      {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
+                      <input
+                        value={form.phone}
+                        onChange={(e) => update("phone", e.target.value)}
+                        className={inputClass}
+                        placeholder="+420 xxx xxx xxx"
+                        inputMode="tel"
+                      />
+                      {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {sending ? (
+                      <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                    ) : (
+                      <Send size={20} />
+                    )}
+                    {sending ? "Počítám…" : "Zobrazit můj R-STOP (DTI2) →"}
+                  </button>
 
-                      <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 text-left">
-                        <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
-                          <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-red-300 mb-1">
-                            Standardní výpočet by vám nabídl
-                          </p>
-                          <p className="text-lg sm:text-xl font-bold text-white/70 line-through decoration-red-400/70 tabular-nums">
-                            {formatKc(result.standardPayment)}
-                          </p>
-                        </div>
-                        <div className="rounded-xl border border-accent/40 bg-accent/10 p-4">
-                          <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-accent mb-1">
-                            Váš bezpečný R-STOP
-                          </p>
-                          <p className="text-lg sm:text-xl font-bold text-white tabular-nums">
-                            {formatKc(result.rStop)}
-                          </p>
-                        </div>
-                      </div>
+                  <p className="text-center text-xs text-white/40 leading-relaxed">
+                    🔒 Vaše údaje jsou 100% v bezpečí. Výsledek uvidíte okamžitě, přesné číslo na míru vám pošleme do
+                    24 hodin.
+                  </p>
 
-                      {result.gap > 0 ? (
-                        <p className="mt-5 flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-red-300">
-                          <AlertTriangle size={18} className="flex-shrink-0" />
-                          Rozdíl {formatKc(result.gap)} měsíčně mezi tím, co vám nabídnou, a tím, co je bezpečné.
+                  <p className="text-center text-xs text-white/40 leading-relaxed">
+                    Odesláním souhlasíte se{" "}
+                    <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                      zpracováním osobních údajů
+                    </Link>{" "}
+                    za účelem vyřízení poptávky.
+                  </p>
+                </motion.form>
+              ) : (
+                result && (
+                  <motion.div
+                    key="result"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.35 }}
+                    className="rounded-xl border-2 border-accent/50 bg-black p-6 sm:p-8 text-center"
+                  >
+                    <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mb-2">
+                      Váš orientační výsledek
+                    </p>
+                    <p className="text-sm sm:text-base text-white/60 mb-6">
+                      R-STOP (DTI2) — bezpečná splátka na rodičovské
+                    </p>
+
+                    <div className="text-5xl sm:text-6xl md:text-7xl font-black text-gradient-gold leading-none mb-2 tabular-nums">
+                      {formatKc(result.rStop)}
+                    </div>
+                    <p className="text-white/40 text-xs sm:text-sm mb-8">měsíčně</p>
+
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 text-left">
+                      <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
+                        <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-red-300 mb-1">
+                          Standardní výpočet by vám nabídl
                         </p>
-                      ) : (
-                        <p className="mt-5 flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-emerald-300">
-                          <ShieldCheck size={18} className="flex-shrink-0" />
-                          Podle odhadu jste v bezpečném pásmu.
+                        <p className="text-lg sm:text-xl font-bold text-white/70 line-through decoration-red-400/70 tabular-nums">
+                          {formatKc(result.standardPayment)}
                         </p>
-                      )}
-
-                      <p className="mt-5 text-[11px] sm:text-xs text-white/30 leading-relaxed">
-                        Orientační odhad z vašich odpovědí (sazba {STANDARD_RATE_PCT.toString().replace(".", ",")} %
-                        p.a., {STANDARD_YEARS} let; na rodičovské cca {PARENTAL_INCOME_SHARE_PCT} % dnešního příjmu,
-                        bezpečná splátka max. {SAFE_PAYMENT_SHARE_PCT} % z něj). Přesné číslo na míru dostanete po
-                        individuálním propočtu.
-                      </p>
-                    </motion.div>
-                  )}
-
-                  {!formOpen ? (
-                    <button
-                      type="button"
-                      onClick={() => setFormOpen(true)}
-                      className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide active:scale-[0.97] transition-all"
-                    >
-                      Chci přesný R-STOP (DTI2) + plán na míru →
-                    </button>
-                  ) : (
-                    <motion.form
-                      onSubmit={handleSubmit}
-                      noValidate
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="space-y-4 sm:space-y-5"
-                    >
-                      <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-1 text-center">
-                        Kam vám mám poslat přesný R-STOP (DTI2)?
-                      </h3>
-                      <p className="text-center text-sm text-white/50 mb-3">
-                        Individuální propočet a plán vám osobně připravím do 24 hodin.
-                      </p>
-
-                      <div>
-                        <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
-                        <input
-                          value={form.name}
-                          onChange={(e) => update("name", e.target.value)}
-                          className={inputClass}
-                          placeholder="Jana Nováková"
-                        />
-                        {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
                       </div>
-                      <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                        <div>
-                          <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
-                          <input
-                            type="email"
-                            value={form.email}
-                            onChange={(e) => update("email", e.target.value)}
-                            className={inputClass}
-                            placeholder="jana@email.cz"
-                          />
-                          {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-                        </div>
-                        <div>
-                          <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
-                          <input
-                            value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className={inputClass}
-                            placeholder="+420 xxx xxx xxx"
-                            inputMode="tel"
-                          />
-                          {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
-                        </div>
+                      <div className="rounded-xl border border-accent/40 bg-accent/10 p-4">
+                        <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-accent mb-1">
+                          Váš bezpečný R-STOP
+                        </p>
+                        <p className="text-lg sm:text-xl font-bold text-white tabular-nums">
+                          {formatKc(result.rStop)}
+                        </p>
                       </div>
-                      <button
-                        type="submit"
-                        disabled={sending}
-                        className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                      >
-                        {sending ? (
-                          <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
-                        ) : (
-                          <Send size={20} />
-                        )}
-                        {sending ? "Odesílám…" : "Odeslat a získat přesný plán →"}
-                      </button>
+                    </div>
 
-                      <p className="text-center text-xs text-white/40 leading-relaxed">
-                        🔒 Vaše údaje jsou 100% v bezpečí. Přesný R-STOP (DTI2) na míru vám pošleme do 24 hodin.
+                    {result.gap > 0 ? (
+                      <p className="mt-5 flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-red-300">
+                        <AlertTriangle size={18} className="flex-shrink-0" />
+                        Rozdíl {formatKc(result.gap)} měsíčně mezi tím, co vám nabídnou, a tím, co je bezpečné.
                       </p>
+                    ) : (
+                      <p className="mt-5 flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-emerald-300">
+                        <ShieldCheck size={18} className="flex-shrink-0" />
+                        Podle odhadu jste v bezpečném pásmu.
+                      </p>
+                    )}
 
-                      <p className="text-center text-xs text-white/40 leading-relaxed">
-                        Odesláním souhlasíte se{" "}
-                        <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
-                          zpracováním osobních údajů
-                        </Link>{" "}
-                        za účelem vyřízení poptávky.
-                      </p>
-                    </motion.form>
-                  )}
-                </motion.div>
+                    <p className="mt-5 text-[11px] sm:text-xs text-white/30 leading-relaxed">
+                      Orientační odhad z vašich odpovědí (sazba {STANDARD_RATE_PCT.toString().replace(".", ",")} %
+                      p.a., {STANDARD_YEARS} let; na rodičovské cca {PARENTAL_INCOME_SHARE_PCT} % dnešního příjmu,
+                      bezpečná splátka max. {SAFE_PAYMENT_SHARE_PCT} % z něj).
+                    </p>
+
+                    <p className="mt-6 pt-5 border-t border-white/10 text-sm sm:text-base font-bold text-white">
+                      Přesný R-STOP (DTI2) na míru vám pošlu na {form.email} do 24 hodin.
+                    </p>
+                  </motion.div>
+                )
               )}
             </>
           </motion.div>
