@@ -237,7 +237,7 @@ const RStop = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-7xl font-body font-black text-white leading-[1.1] mb-8 tracking-tight"
             >
-              Hypotéku vám spočítají na dnešní dva platy. Jestli ji utáhnete i s jedním a miminkem navíc, to už
+              Hypotéku vám spočítají z dnešních dvou platů. Jestli ji utáhnete i s miminkem a rodičákem, to už
               nespočítá nikdo.
             </motion.h1>
 
@@ -495,10 +495,6 @@ const RStop = () => {
                       Orientační odhad z vašich odpovědí (sazba {STANDARD_RATE_PCT.toString().replace(".", ",")} %
                       p.a., {STANDARD_YEARS} let; na rodičovské cca {PARENTAL_INCOME_SHARE_PCT} % dnešního příjmu,
                       bezpečná splátka max. {SAFE_PAYMENT_SHARE_PCT} % z něj).
-                    </p>
-
-                    <p className="mt-6 pt-5 border-t border-white/10 text-sm sm:text-base font-bold text-white">
-                      Přesný R-STOP (DTI2) na míru vám pošlu na {form.email} do 24 hodin.
                     </p>
                   </motion.div>
                 )
