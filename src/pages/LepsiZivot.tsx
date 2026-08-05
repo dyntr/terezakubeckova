@@ -10,14 +10,22 @@ import CertificatesSection from "@/components/CertificatesSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
 
+const isValidCzechMobile = (raw: string) => {
+  const digits = raw.replace(/[\s()-]/g, "").replace(/^(\+420|00420)/, "");
+  if (!/^[67]\d{8}$/.test(digits)) return false;
+  if (/^(\d)\1{8}$/.test(digits)) return false;
+  if (digits === "123456789" || digits === "987654321") return false;
+  return true;
+};
+
 const leadSchema = z.object({
   name: z.string().trim().min(1, "Vyplňte jméno").max(100),
   email: z.string().trim().email("Zadejte platný e-mail").max(255),
-  phone: z.string().trim().min(9, "Zadejte platné číslo").max(20),
+  phone: z
+    .string()
+    .trim()
+    .refine(isValidCzechMobile, "Zadejte platné české mobilní číslo (např. 601 234 567)"),
 });
-
-const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
-const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/1mm2ym4r8qw9bh521kt6eb75qdljxbht";
 
 declare global {
   interface Window {
@@ -119,6 +127,7 @@ const LepsiZivot = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
+  const [confirmationSent, setConfirmationSent] = useState(false);
 
   const update = (field: string, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
@@ -134,7 +143,10 @@ const LepsiZivot = () => {
     setStep((s) => s + 1);
   };
 
-  const goBack = () => setStep((s) => Math.max(0, s - 1));
+  const goBack = () => {
+    setStep((s) => Math.max(0, s - 1));
+    setConfirmationSent(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,29 +173,14 @@ const LepsiZivot = () => {
         source: "/lepsi-zivot",
       };
 
-      const [web3Res] = await Promise.allSettled([
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: "Bezpečná splátka na rodičovské (/lepsi-zivot)",
-            ...payload,
-          }),
-        }),
-        fetch(MAKE_WEBHOOK_URL, {
-          method: "POST",
-          mode: "no-cors",
-          body: new URLSearchParams(payload),
-        }),
-      ]);
+      const res = await fetch("/api/send-confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      if (web3Res.status === "fulfilled" && web3Res.value.ok) {
-        window.fbq?.("track", "Lead");
-        toast.success("Odpovědi odeslány! Do 24 hodin vám pošlu vaši bezpečnou splátku.");
-        setForm({ name: "", email: "", phone: "" });
-        setAnswers({ situace: "", prijem: "", hypoteka: "" });
-        setStep(0);
+      if (res.ok) {
+        setConfirmationSent(true);
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -346,6 +343,25 @@ const LepsiZivot = () => {
                     ))}
                   </div>
                 </motion.div>
+              ) : confirmationSent ? (
+                <motion.div
+                  key="confirmation-pending"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-center py-6"
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4">
+                    Zkontrolujte e-mail 📩
+                  </h3>
+                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
+                    Poslali jsme vám potvrzovací e-mail na <span className="font-semibold text-foreground">{form.email}</span>.
+                    Klikněte na tlačítko uvnitř a hned se pustím do výpočtu vaší bezpečné splátky.
+                  </p>
+                  <p className="text-muted-foreground text-xs mt-4">
+                    Nic nepřišlo? Zkontrolujte prosím i spam/hromadné.
+                  </p>
+                </motion.div>
               ) : (
                 <motion.form
                   key="contact"
@@ -408,7 +424,7 @@ const LepsiZivot = () => {
                   </button>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
-                    🔒 Vaše údaje jsou 100% v bezpečí. Výsledek vám zpracujeme a pošleme do 24 hodin.
+                    🔒 Pošleme vám potvrzovací e-mail. Po potvrzení vám do 24 hodin zpracujeme a pošleme výsledek.
                   </p>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">

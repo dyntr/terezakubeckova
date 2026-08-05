@@ -9,6 +9,7 @@ import Cookies from "./pages/Cookies";
 import LepsiZivot from "./pages/LepsiZivot";
 import BytProDite from "./pages/BytProDite";
 import RStop from "./pages/RStop";
+import PotvrzeniEmail from "./pages/PotvrzeniEmail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/lepsi-zivot" element={<LepsiZivot />} />
           <Route path="/byt-pro-dite" element={<BytProDite />} />
           <Route path="/r-stop" element={<RStop />} />
+          <Route path="/potvrzeni" element={<PotvrzeniEmail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
