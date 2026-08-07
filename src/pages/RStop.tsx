@@ -46,6 +46,11 @@ const recognitionItems = [
 
 const questions = [
   {
+    key: "dluhy",
+    question: "Máte aktuálně exekuci nebo osobní bankrot?",
+    options: ["Ne, nemám", "Ano, mám"],
+  },
+  {
     key: "situace",
     question: "V jaké fázi jste teď?",
     options: [
@@ -66,6 +71,9 @@ const questions = [
   },
 ] as const;
 
+const DEBT_DISQUALIFY_OPTION = "Ano, mám";
+const LOWEST_INCOME_OPTION = "do 60 000 Kč";
+
 type AnswerKey = (typeof questions)[number]["key"];
 type Answers = Record<AnswerKey, string>;
 
@@ -77,10 +85,11 @@ const RStop = () => {
   const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
 
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Answers>({ situace: "", prijem: "", hypoteka: "" });
+  const [answers, setAnswers] = useState<Answers>({ dluhy: "", situace: "", prijem: "", hypoteka: "" });
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
+  const [disqualified, setDisqualified] = useState(false);
 
   const result = useMemo(() => calcRStopResult(answers.prijem, answers.hypoteka), [answers.prijem, answers.hypoteka]);
 
@@ -95,10 +104,24 @@ const RStop = () => {
 
   const selectAnswer = (key: AnswerKey, value: string) => {
     setAnswers((a) => ({ ...a, [key]: value }));
+    if (key === "dluhy" && value === DEBT_DISQUALIFY_OPTION) {
+      setDisqualified(true);
+      return;
+    }
+    if (key === "prijem" && value === LOWEST_INCOME_OPTION) {
+      setDisqualified(true);
+      return;
+    }
     setStep((s) => s + 1);
   };
 
-  const goBack = () => setStep((s) => Math.max(0, s - 1));
+  const goBack = () => {
+    if (disqualified) {
+      setDisqualified(false);
+      return;
+    }
+    setStep((s) => Math.max(0, s - 1));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -285,7 +308,7 @@ const RStop = () => {
           >
             {/* Progress bar */}
             <div className="flex items-center gap-3 mb-6 sm:mb-8">
-              {step > 0 && (
+              {(step > 0 || disqualified) && (
                 <button
                   type="button"
                   onClick={goBack}
@@ -308,7 +331,22 @@ const RStop = () => {
             </div>
 
             <>
-              {currentQuestion ? (
+              {disqualified ? (
+                <motion.div
+                  key="disqualified"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-center py-6"
+                >
+                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-4">Děkujeme za váš čas</h3>
+                  <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
+                    Na základě vašich odpovědí vám bohužel teď nemůžeme nabídnout řešení, které by dávalo smysl.
+                    Nechceme vás zdržovat něčím, co by nakonec nevyšlo. Kdyby se vaše situace v budoucnu změnila,
+                    ozvěte se — rádi se na to podíváme znovu.
+                  </p>
+                </motion.div>
+              ) : currentQuestion ? (
                 <motion.div
                   key={currentQuestion.key}
                   initial={{ opacity: 0, x: 20 }}
