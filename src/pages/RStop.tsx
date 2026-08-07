@@ -47,7 +47,7 @@ const recognitionItems = [
 const questions = [
   {
     key: "dluhy",
-    question: "Máte aktuálně exekuci nebo osobní bankrot?",
+    question: "Máte exekuce nebo jakékoliv jiné dluhy (kromě hypotéky)?",
     options: ["Ne, nemám", "Ano, mám"],
   },
   {
