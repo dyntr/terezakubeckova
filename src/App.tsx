@@ -10,6 +10,7 @@ import LepsiZivot from "./pages/LepsiZivot";
 import LepsiZivotDekujeme from "./pages/LepsiZivotDekujeme";
 import BytProDite from "./pages/BytProDite";
 import RStop from "./pages/RStop";
+import RStopVysledek from "./pages/RStopVysledek";
 import PotvrzeniEmail from "./pages/PotvrzeniEmail";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/lepsi-zivot-dekujeme" element={<LepsiZivotDekujeme />} />
           <Route path="/byt-pro-dite" element={<BytProDite />} />
           <Route path="/r-stop" element={<RStop />} />
+          <Route path="/r-stop-vysledek" element={<RStopVysledek />} />
           <Route path="/potvrzeni" element={<PotvrzeniEmail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
