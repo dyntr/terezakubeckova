@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Gdpr from "./pages/Gdpr";
 import Cookies from "./pages/Cookies";
 import LepsiZivot from "./pages/LepsiZivot";
+import LepsiZivotDekujeme from "./pages/LepsiZivotDekujeme";
 import BytProDite from "./pages/BytProDite";
 import RStop from "./pages/RStop";
 import PotvrzeniEmail from "./pages/PotvrzeniEmail";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/gdpr" element={<Gdpr />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/lepsi-zivot" element={<LepsiZivot />} />
+          <Route path="/lepsi-zivot-dekujeme" element={<LepsiZivotDekujeme />} />
           <Route path="/byt-pro-dite" element={<BytProDite />} />
           <Route path="/r-stop" element={<RStop />} />
           <Route path="/potvrzeni" element={<PotvrzeniEmail />} />

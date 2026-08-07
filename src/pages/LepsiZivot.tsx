@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Send, Calculator, PiggyBank, ScaleIcon, Check, ChevronLeft } from "lucide-react";
@@ -111,6 +111,7 @@ type AnswerKey = (typeof questions)[number]["key"];
 type Answers = Record<AnswerKey, string>;
 
 const LepsiZivot = () => {
+  const navigate = useNavigate();
   const recognitionRef = useRef(null);
   const auditRef = useRef(null);
   const toolRef = useRef(null);
@@ -127,7 +128,6 @@ const LepsiZivot = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
-  const [confirmationSent, setConfirmationSent] = useState(false);
 
   const update = (field: string, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
@@ -143,10 +143,7 @@ const LepsiZivot = () => {
     setStep((s) => s + 1);
   };
 
-  const goBack = () => {
-    setStep((s) => Math.max(0, s - 1));
-    setConfirmationSent(false);
-  };
+  const goBack = () => setStep((s) => Math.max(0, s - 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -180,7 +177,7 @@ const LepsiZivot = () => {
       });
 
       if (res.ok) {
-        setConfirmationSent(true);
+        navigate("/lepsi-zivot-dekujeme", { state: { email: form.email } });
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -342,25 +339,6 @@ const LepsiZivot = () => {
                       </button>
                     ))}
                   </div>
-                </motion.div>
-              ) : confirmationSent ? (
-                <motion.div
-                  key="confirmation-pending"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-center py-6"
-                >
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground mb-4">
-                    Zkontrolujte e-mail 📩
-                  </h3>
-                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
-                    Poslali jsme vám potvrzovací e-mail na <span className="font-semibold text-foreground">{form.email}</span>.
-                    Klikněte na tlačítko uvnitř a hned se pustím do výpočtu vaší bezpečné splátky.
-                  </p>
-                  <p className="text-muted-foreground text-xs mt-4">
-                    Nic nepřišlo? Zkontrolujte prosím i spam/hromadné.
-                  </p>
                 </motion.div>
               ) : (
                 <motion.form
