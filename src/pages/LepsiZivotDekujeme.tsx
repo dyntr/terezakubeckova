@@ -1,13 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TKLogo from "@/components/TKLogo";
 import Footer from "@/components/Footer";
 
-type LocationState = { email?: string } | null;
-
 const LepsiZivotDekujeme = () => {
-  const location = useLocation();
-  const email = (location.state as LocationState)?.email;
-
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b border-border/50">
@@ -24,19 +19,12 @@ const LepsiZivotDekujeme = () => {
       <main className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-md w-full text-center">
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-foreground mb-4">
-            Zkontrolujte e-mail 📩
+            Díky! Poptávka je odeslaná. ✅
           </h1>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            {email ? (
-              <>
-                Poslali jsme vám potvrzovací e-mail na <span className="font-semibold text-foreground">{email}</span>
-                . Klikněte na tlačítko uvnitř a hned se pustím do výpočtu vaší bezpečné splátky.
-              </>
-            ) : (
-              <>Poslali jsme vám potvrzovací e-mail. Klikněte na tlačítko uvnitř a hned se pustím do výpočtu vaší bezpečné splátky.</>
-            )}
+            Vaši bezpečnou splátku hypotéky na rodičovské vám zpracuji a pošlu do 24 hodin. Mezitím se můžete vrátit
+            na hlavní stránku.
           </p>
-          <p className="text-muted-foreground text-xs mb-8">Nic nepřišlo? Zkontrolujte prosím i spam/hromadné.</p>
           <Link
             to="/"
             className="gold-gradient text-accent-foreground px-6 py-3 rounded-lg font-semibold inline-block hover:opacity-90 transition-opacity"

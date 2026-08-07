@@ -27,6 +27,9 @@ const leadSchema = z.object({
     .refine(isValidCzechMobile, "Zadejte platné české mobilní číslo (např. 601 234 567)"),
 });
 
+const WEB3FORMS_KEY = "288ee3af-59f1-422a-8dc0-918c2e503d6b";
+const MAKE_WEBHOOK_URL = "https://hook.eu2.make.com/1mm2ym4r8qw9bh521kt6eb75qdljxbht";
+
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -170,14 +173,26 @@ const LepsiZivot = () => {
         source: "/lepsi-zivot",
       };
 
-      const res = await fetch("/api/send-confirmation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const [web3Res] = await Promise.allSettled([
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: "Bezpečná splátka na rodičovské (/lepsi-zivot)",
+            ...payload,
+          }),
+        }),
+        fetch(MAKE_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: new URLSearchParams(payload),
+        }),
+      ]);
 
-      if (res.ok) {
-        navigate("/lepsi-zivot-dekujeme", { state: { email: form.email } });
+      if (web3Res.status === "fulfilled" && web3Res.value.ok) {
+        window.fbq?.("track", "Lead");
+        navigate("/lepsi-zivot-dekujeme");
       } else {
         toast.error("Něco se pokazilo. Zkuste to prosím znovu.");
       }
@@ -402,7 +417,7 @@ const LepsiZivot = () => {
                   </button>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
-                    🔒 Pošleme vám potvrzovací e-mail. Po potvrzení vám do 24 hodin zpracujeme a pošleme výsledek.
+                    🔒 Vaše údaje jsou 100% v bezpečí. Výsledek vám zpracujeme a pošleme do 24 hodin.
                   </p>
 
                   <p className="text-center text-xs text-muted-foreground leading-relaxed">
