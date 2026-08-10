@@ -223,8 +223,8 @@ const ProNastavajiciMamy = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base sm:text-lg text-white/60 mb-10 leading-relaxed"
             >
-              Pomůžeme vám vyřídit hypotéku tak, aby z vás rodičovská neudělala žebračku prosící o každou korunu —
-              ne tak, jak by ji ráda viděla banka.
+              Pomůžu vám vyřídit hypotéku tak, aby z vás rodičovská neudělala účetní, co počítá každou korunu — ne
+              tak, jak by ji ráda viděla banka.
             </motion.p>
 
             <motion.div
@@ -305,12 +305,12 @@ const ProNastavajiciMamy = () => {
                 },
                 {
                   n: "2",
-                  t: "Zavoláme vám na 15minutový hovor",
-                  d: "Zjistíme vaši reálnou situaci, ne jen kolik chcete půjčit.",
+                  t: "Zavolám vám na 15minutový hovor",
+                  d: "Zjistím vaši reálnou situaci, ne jen kolik chcete půjčit.",
                 },
                 {
                   n: "3",
-                  t: "Připravíme kompletní plán a vyřídíme hypotéku",
+                  t: "Připravím kompletní plán a vyřídím hypotéku",
                   d: "S rezervou na rodičovskou, ne na dnešní dva platy.",
                 },
               ].map((s) => (
@@ -340,10 +340,10 @@ const ProNastavajiciMamy = () => {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-black text-white mb-4">
-              Tohle není pro každého. Zjistíme, jestli jste na řadě.
+              Tohle není pro každého. Zjistím, jestli jste na řadě.
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm sm:text-base">
-              Pár rychlých otázek. Pokud to dává smysl, ozveme se vám na 15minutový hovor.
+              Pár rychlých otázek. Pokud to dává smysl, ozvu se vám na 15minutový hovor.
             </p>
           </motion.div>
 
@@ -478,7 +478,7 @@ const ProNastavajiciMamy = () => {
                   </button>
 
                   <p className="text-center text-xs text-white/40 leading-relaxed">
-                    🔒 Vaše údaje jsou 100% v bezpečí. Ozveme se vám do 24 hodin s termínem hovoru.
+                    🔒 Vaše údaje jsou 100% v bezpečí. Ozvu se vám do 24 hodin s termínem hovoru.
                   </p>
 
                   <p className="text-center text-xs text-white/40 leading-relaxed">
@@ -504,6 +504,13 @@ const ProNastavajiciMamy = () => {
             transition={{ duration: 0.6 }}
             className="glass-card p-6 sm:p-10"
           >
+            <div className="flex justify-center mb-6">
+              <img
+                src="/hero-portrait.webp"
+                alt="Tereza Kubečková"
+                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-accent/40 shadow-lg"
+              />
+            </div>
             <p className="text-sm font-bold text-accent tracking-wider uppercase mb-6 text-center">
               Ode mě osobně
             </p>

@@ -22,7 +22,7 @@ const ProNastavajiciMamyDekujeme = () => {
             Díky! Poptávka je odeslaná. ✅
           </h1>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Ozveme se vám do 24 hodin s termínem na 15minutový hovor. Mezitím se můžete vrátit na hlavní stránku.
+            Ozvu se vám do 24 hodin s termínem na 15minutový hovor. Mezitím se můžete vrátit na hlavní stránku.
           </p>
           <Link
             to="/"
