@@ -14,6 +14,8 @@ import RStopVysledek from "./pages/RStopVysledek";
 import PotvrzeniEmail from "./pages/PotvrzeniEmail";
 import StresTest from "./pages/StresTest";
 import StresTestDekujeme from "./pages/StresTestDekujeme";
+import ProNastavajiciMamy from "./pages/ProNastavajiciMamy";
+import ProNastavajiciMamyDekujeme from "./pages/ProNastavajiciMamyDekujeme";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
           <Route path="/potvrzeni" element={<PotvrzeniEmail />} />
           <Route path="/stres-test" element={<StresTest />} />
           <Route path="/stres-test-dekujeme" element={<StresTestDekujeme />} />
+          <Route path="/pro-nastavajici-mamy" element={<ProNastavajiciMamy />} />
+          <Route path="/pro-nastavajici-mamy-dekujeme" element={<ProNastavajiciMamyDekujeme />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
