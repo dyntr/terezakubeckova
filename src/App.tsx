@@ -12,6 +12,8 @@ import BytProDite from "./pages/BytProDite";
 import RStop from "./pages/RStop";
 import RStopVysledek from "./pages/RStopVysledek";
 import PotvrzeniEmail from "./pages/PotvrzeniEmail";
+import StresTest from "./pages/StresTest";
+import StresTestDekujeme from "./pages/StresTestDekujeme";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/r-stop" element={<RStop />} />
           <Route path="/r-stop-vysledek" element={<RStopVysledek />} />
           <Route path="/potvrzeni" element={<PotvrzeniEmail />} />
+          <Route path="/stres-test" element={<StresTest />} />
+          <Route path="/stres-test-dekujeme" element={<StresTestDekujeme />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
