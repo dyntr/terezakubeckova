@@ -111,16 +111,16 @@ const ProNastavajiciMamy = () => {
   };
 
   const inputClass =
-    "w-full bg-white/5 border-2 border-white/15 rounded-lg px-4 py-3 text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/50 transition-shadow";
+    "w-full bg-background border border-border rounded-lg px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-shadow";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b-2 border-accent/30">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container-narrow mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             <TKLogo className="w-7 h-7 sm:w-8 sm:h-8 text-accent flex-shrink-0" />
-            <span className="font-heading text-base sm:text-lg md:text-xl font-bold text-white truncate">
+            <span className="font-heading text-base sm:text-lg md:text-xl font-bold text-foreground truncate">
               Tereza <span className="hidden sm:inline text-gradient-gold">Kubečková</span>
             </span>
           </Link>
@@ -135,9 +135,9 @@ const ProNastavajiciMamy = () => {
       </header>
 
       {/* SEC 1 — HERO, perfektní message-match na kreativy */}
-      <section className="relative overflow-hidden bg-[#0a0a0f]">
-        <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_0%,hsl(0_60%_25%/0.35),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_50%_100%,hsl(38_65%_30%/0.25),transparent_60%)]" />
+      <section className="relative overflow-hidden bg-secondary">
+        <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_50%_0%,hsl(38_65%_75%/0.35),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_50%_at_50%_100%,hsl(38_65%_80%/0.25),transparent_60%)]" />
 
         <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 w-full">
           <div className="max-w-2xl mx-auto text-center">
@@ -147,7 +147,7 @@ const ProNastavajiciMamy = () => {
               transition={{ duration: 0.5 }}
               className="flex items-center justify-center gap-2 mb-6"
             >
-              <span className="inline-block bg-red-500/10 border-2 border-red-500/40 text-red-400 px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
+              <span className="inline-block bg-accent/10 border-2 border-accent/30 text-accent px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
                 Jen pro budoucí mámy s vlastní rezervou
               </span>
             </motion.div>
@@ -156,7 +156,7 @@ const ProNastavajiciMamy = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-body font-black text-white leading-[1.15] mb-8 tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl font-heading font-black text-foreground leading-[1.15] mb-8 tracking-tight"
             >
               Máte našetřeno přes 500 000 Kč. Čekáte miminko. A bojíte se, že vám banka schválí hypotéku, kterou pak
               nezvládnete uživit.
@@ -166,7 +166,7 @@ const ProNastavajiciMamy = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg text-white/60 mb-10 leading-relaxed"
+              className="text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed"
             >
               Pomůžu vám vyřídit hypotéku tak, aby z vás rodičovská neudělala účetní, co počítá každou korunu — ne
               tak, jak by ji ráda viděla banka.
@@ -183,7 +183,7 @@ const ProNastavajiciMamy = () => {
               >
                 Chci vyřídit hypotéku bezpečně pro rodinu →
               </button>
-              <p className="mt-4 text-xs sm:text-sm text-white/50 max-w-sm mx-auto">
+              <p className="mt-4 text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
                 Tohle není pro každého. Je to pro budoucí mámy, co mají už našetřeno přes 500 000 Kč a bydlení chtějí
                 řešit v příštích měsících — ne jen „se podívat, kolik by to bylo".
               </p>
@@ -193,25 +193,25 @@ const ProNastavajiciMamy = () => {
       </section>
 
       {/* SEC 2 — Pasti bank a syrová realita */}
-      <section className="section-padding bg-[#0a0a0f]" ref={painRef}>
+      <section className="section-padding bg-background" ref={painRef}>
         <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={painInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm font-bold text-red-400 tracking-wider uppercase mb-6 text-center">
+            <p className="text-sm font-bold text-accent tracking-wider uppercase mb-6 text-center">
               Dva platy dnes. Jeden plat a rodičák za pár měsíců.
             </p>
-            <div className="space-y-5 text-white/80 text-base sm:text-lg leading-relaxed">
+            <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
               <p>
-                Dnes vyděláváte se svým partnerem <span className="text-white font-bold">90 000 Kč</span> měsíčně.
+                Dnes vyděláváte se svým partnerem <span className="text-foreground font-bold">90 000 Kč</span> měsíčně.
                 Byt vypadá dosažitelně. Banka se na vás usměje a schválí přesně to, o co si řeknete.
               </p>
-              <p className="text-white font-bold">Jenže do té tabulky nikdy nezadá jedno slovo: rodičovská.</p>
+              <p className="text-foreground font-bold">Jenže do té tabulky nikdy nezadá jedno slovo: rodičovská.</p>
               <p>
                 Za pár měsíců zůstane na účtu jeden plat a k němu rodičovský příspěvek. Splátka{" "}
-                <span className="text-red-400 font-bold">30 000 Kč</span> ale zůstává stejná. Pořád, každý měsíc, bez
+                <span className="text-foreground font-bold">30 000 Kč</span> ale zůstává stejná. Pořád, každý měsíc, bez
                 výjimky.
               </p>
               <p>
@@ -274,20 +274,19 @@ const ProNastavajiciMamy = () => {
         </div>
       </section>
 
-      {/* SEC 4 — Kvalifikační formulář */}
-      <section id="mamy-form" className="section-padding bg-[#0a0a0f] relative overflow-hidden" ref={toolRef}>
-        <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_0%,hsl(38_65%_30%/0.12),transparent_60%)]" />
-        <div className="container-narrow mx-auto max-w-2xl relative z-10">
+      {/* SEC 4 — Kontaktní formulář */}
+      <section id="mamy-form" className="section-padding bg-secondary" ref={toolRef}>
+        <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={toolInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-black text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-black text-foreground mb-4">
               Kam vám mám poslat termín na hovor?
             </h2>
-            <p className="text-white/50 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Nechte mi na sebe kontakt, ozvu se vám do 24 hodin s termínem 15minutového hovoru.
             </p>
           </motion.div>
@@ -296,22 +295,22 @@ const ProNastavajiciMamy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={toolInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-xl border-2 border-accent/25 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8"
+            className="glass-card p-5 sm:p-8"
           >
             <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
               <div>
-                <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Jméno a příjmení</label>
                 <input
                   value={form.name}
                   onChange={(e) => update("name", e.target.value)}
                   className={inputClass}
                   placeholder="Jana Nováková"
                 />
-                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
               </div>
               <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">E-mail</label>
                   <input
                     type="email"
                     value={form.email}
@@ -319,10 +318,10 @@ const ProNastavajiciMamy = () => {
                     className={inputClass}
                     placeholder="jana@email.cz"
                   />
-                  {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Telefon</label>
                   <input
                     value={form.phone}
                     onChange={(e) => update("phone", e.target.value)}
@@ -330,13 +329,13 @@ const ProNastavajiciMamy = () => {
                     placeholder="+420 xxx xxx xxx"
                     inputMode="tel"
                   />
-                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                  {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
                 </div>
               </div>
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {sending ? (
                   <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
@@ -346,11 +345,11 @@ const ProNastavajiciMamy = () => {
                 {sending ? "Odesílám…" : "Chci vyřídit hypotéku bezpečně pro rodinu →"}
               </button>
 
-              <p className="text-center text-xs text-white/40 leading-relaxed">
+              <p className="text-center text-xs text-muted-foreground leading-relaxed">
                 🔒 Vaše údaje jsou 100% v bezpečí. Ozvu se vám do 24 hodin s termínem hovoru.
               </p>
 
-              <p className="text-center text-xs text-white/40 leading-relaxed">
+              <p className="text-center text-xs text-muted-foreground leading-relaxed">
                 Odesláním souhlasíte se{" "}
                 <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
                   zpracováním osobních údajů
@@ -363,7 +362,7 @@ const ProNastavajiciMamy = () => {
       </section>
 
       {/* SEC 5 — Osobní garance & autorita */}
-      <section className="section-padding bg-secondary" ref={guaranteeRef}>
+      <section className="section-padding bg-background" ref={guaranteeRef}>
         <div className="container-narrow mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
