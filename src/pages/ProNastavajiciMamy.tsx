@@ -180,7 +180,7 @@ const ProNastavajiciMamy = () => {
                 onClick={scrollToForm}
                 className="gold-gradient cta-glow text-accent-foreground px-8 py-5 rounded-xl text-base sm:text-lg font-extrabold leading-snug hover:opacity-90 transition-all active:scale-[0.98] w-full sm:w-auto"
               >
-                Chci vyřídit hypotéku bezpečně pro rodinu →
+                Chci bezpečně vyřídit hypotéku
               </button>
               <p className="mt-4 text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
                 Tohle není pro každou. Je to pro budoucí mámy, které mají už našetřeno přes 500 000 Kč a bydlení
@@ -349,7 +349,7 @@ const ProNastavajiciMamy = () => {
                 ) : (
                   <Send size={20} />
                 )}
-                {sending ? "Odesílám…" : "Chci vyřídit hypotéku bezpečně pro rodinu →"}
+                {sending ? "Odesílám…" : "Chci bezpečně vyřídit hypotéku"}
               </button>
 
               <p className="text-center text-xs text-muted-foreground leading-relaxed">
