@@ -168,7 +168,8 @@ const ProNastavajiciMamy = () => {
               className="text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed"
             >
               Pomáhám budoucím mámám nastavit hypotéku na skutečný život s miminkem — ne na tabulku banky, která s
-              rodičovskou vůbec nepočítá. Abyste po porodu řešily miminko, ne to, jestli vám zbyde do výplaty.
+              rodičovskou vůbec nepočítá. Abyste po porodu řešily miminko, ne to, jestli vydržíte do další
+              partnerovy výplaty.
             </motion.p>
 
             <motion.div
