@@ -158,7 +158,7 @@ const ProNastavajiciMamy = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-heading font-black text-foreground leading-[1.15] mb-8 tracking-tight"
             >
-              Banka vám hypotéku spočítá ze dvou výplat. Vy ji budete splácet i s jednou.
+              Kamarádky si na rodičovské utahují opasky. Vy si budete užívat miminko.
             </motion.h1>
 
             <motion.p
