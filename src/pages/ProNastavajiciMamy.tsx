@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Send, ChevronLeft } from "lucide-react";
+import { Send } from "lucide-react";
 import TKLogo from "@/components/TKLogo";
 import ReviewsSection from "@/components/ReviewsSection";
 import Footer from "@/components/Footer";
@@ -34,30 +34,6 @@ declare global {
   }
 }
 
-const questions = [
-  {
-    key: "dluhy",
-    question: "Máte exekuce nebo jakékoliv jiné dluhy (kromě hypotéky)?",
-    options: ["Ne, nemám", "Ano, mám"],
-  },
-  {
-    key: "faze",
-    question: "V jaké fázi jste?",
-    options: ["Čekáme mimi", "Hledáme byt", "Mám vybranou nemovitost, řešíme do 6 měsíců"],
-  },
-  {
-    key: "uspory",
-    question: "Kolik máte cca našetřeno na základ bydlení?",
-    options: ["Pod 500 000 Kč", "500 000 – 1 000 000 Kč", "Více než 1 000 000 Kč"],
-  },
-] as const;
-
-const DEBT_DISQUALIFY_OPTION = "Ano, mám";
-const LOW_SAVINGS_DISQUALIFY_OPTION = "Pod 500 000 Kč";
-
-type AnswerKey = (typeof questions)[number]["key"];
-type Answers = Record<AnswerKey, string>;
-
 const ProNastavajiciMamy = () => {
   const navigate = useNavigate();
   const painRef = useRef(null);
@@ -69,12 +45,9 @@ const ProNastavajiciMamy = () => {
   const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
   const guaranteeInView = useInView(guaranteeRef, { once: true, margin: "-100px" });
 
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Answers>({ dluhy: "", faze: "", uspory: "" });
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
-  const [disqualified, setDisqualified] = useState(false);
 
   const update = (field: string, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
@@ -83,27 +56,6 @@ const ProNastavajiciMamy = () => {
 
   const scrollToForm = () => {
     document.querySelector("#mamy-form")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const selectAnswer = (key: AnswerKey, value: string) => {
-    setAnswers((a) => ({ ...a, [key]: value }));
-    if (key === "dluhy" && value === DEBT_DISQUALIFY_OPTION) {
-      setDisqualified(true);
-      return;
-    }
-    if (key === "uspory" && value === LOW_SAVINGS_DISQUALIFY_OPTION) {
-      setDisqualified(true);
-      return;
-    }
-    setStep((s) => s + 1);
-  };
-
-  const goBack = () => {
-    if (disqualified) {
-      setDisqualified(false);
-      return;
-    }
-    setStep((s) => Math.max(0, s - 1));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -125,9 +77,6 @@ const ProNastavajiciMamy = () => {
         name: form.name,
         email: form.email,
         phone: form.phone,
-        dluhy: answers.dluhy,
-        faze: answers.faze,
-        uspory: answers.uspory,
         source: "/pro-nastavajici-mamy",
       };
 
@@ -163,10 +112,6 @@ const ProNastavajiciMamy = () => {
 
   const inputClass =
     "w-full bg-white/5 border-2 border-white/15 rounded-lg px-4 py-3 text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/50 transition-shadow";
-
-  const totalSteps = questions.length + 1;
-  const progressPct = ((step + 1) / totalSteps) * 100;
-  const currentQuestion = step < questions.length ? questions[step] : null;
 
   return (
     <div className="min-h-screen">
@@ -340,10 +285,10 @@ const ProNastavajiciMamy = () => {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-black text-white mb-4">
-              Tohle není pro každého. Zjistím, jestli jste na řadě.
+              Kam vám mám poslat termín na hovor?
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm sm:text-base">
-              Pár rychlých otázek. Pokud to dává smysl, ozvu se vám na 15minutový hovor.
+              Nechte mi na sebe kontakt, ozvu se vám do 24 hodin s termínem 15minutového hovoru.
             </p>
           </motion.div>
 
@@ -353,144 +298,66 @@ const ProNastavajiciMamy = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="rounded-xl border-2 border-accent/25 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8"
           >
-            {/* Progress bar */}
-            <div className="flex items-center gap-3 mb-6 sm:mb-8">
-              {(step > 0 || disqualified) && (
-                <button
-                  type="button"
-                  onClick={goBack}
-                  aria-label="Zpět"
-                  className="flex-shrink-0 p-1.5 rounded-lg text-white/40 hover:text-accent hover:bg-white/5 transition-colors"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-              )}
-              <div className="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
-                <motion.div
-                  className="h-full gold-gradient rounded-full"
-                  animate={{ width: `${progressPct}%` }}
-                  transition={{ duration: 0.4 }}
+            <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
+              <div>
+                <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
+                <input
+                  value={form.name}
+                  onChange={(e) => update("name", e.target.value)}
+                  className={inputClass}
+                  placeholder="Jana Nováková"
                 />
+                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
               </div>
-              <span className="flex-shrink-0 text-xs font-bold text-white/40 tabular-nums">
-                {Math.min(step + 1, totalSteps)}/{totalSteps}
-              </span>
-            </div>
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                <div>
+                  <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                    className={inputClass}
+                    placeholder="jana@email.cz"
+                  />
+                  {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
+                  <input
+                    value={form.phone}
+                    onChange={(e) => update("phone", e.target.value)}
+                    className={inputClass}
+                    placeholder="+420 xxx xxx xxx"
+                    inputMode="tel"
+                  />
+                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {sending ? (
+                  <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                ) : (
+                  <Send size={20} />
+                )}
+                {sending ? "Odesílám…" : "Chci vyřídit hypotéku bezpečně pro rodinu →"}
+              </button>
 
-            <>
-              {disqualified ? (
-                <motion.div
-                  key="disqualified"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-center py-6"
-                >
-                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-4">Děkujeme za váš čas</h3>
-                  <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
-                    Na základě vašich odpovědí vám bohužel teď nemůžeme nabídnout řešení, které by dávalo smysl.
-                    Nechceme vás zdržovat něčím, co by nakonec nevyšlo. Kdyby se vaše situace v budoucnu změnila,
-                    ozvěte se — rádi se na to podíváme znovu.
-                  </p>
-                </motion.div>
-              ) : currentQuestion ? (
-                <motion.div
-                  key={currentQuestion.key}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-6 text-center">
-                    {currentQuestion.question}
-                  </h3>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {currentQuestion.options.map((option) => (
-                      <button
-                        key={option}
-                        type="button"
-                        onClick={() => selectAnswer(currentQuestion.key, option)}
-                        className="text-left px-5 py-4 rounded-lg border-2 border-white/10 bg-white/[0.02] hover:border-accent hover:bg-accent/10 transition-all font-bold text-white active:scale-[0.98]"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.form
-                  key="contact"
-                  onSubmit={handleSubmit}
-                  noValidate
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4 sm:space-y-5"
-                >
-                  <h3 className="text-xl sm:text-2xl font-heading font-black text-white mb-1 text-center">
-                    Kam vám mám poslat termín na hovor?
-                  </h3>
+              <p className="text-center text-xs text-white/40 leading-relaxed">
+                🔒 Vaše údaje jsou 100% v bezpečí. Ozvu se vám do 24 hodin s termínem hovoru.
+              </p>
 
-                  <div>
-                    <label className="block text-sm font-bold text-white/80 mb-1.5">Jméno a příjmení</label>
-                    <input
-                      value={form.name}
-                      onChange={(e) => update("name", e.target.value)}
-                      className={inputClass}
-                      placeholder="Jana Nováková"
-                    />
-                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                    <div>
-                      <label className="block text-sm font-bold text-white/80 mb-1.5">E-mail</label>
-                      <input
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => update("email", e.target.value)}
-                        className={inputClass}
-                        placeholder="jana@email.cz"
-                      />
-                      {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-bold text-white/80 mb-1.5">Telefon</label>
-                      <input
-                        value={form.phone}
-                        onChange={(e) => update("phone", e.target.value)}
-                        className={inputClass}
-                        placeholder="+420 xxx xxx xxx"
-                        inputMode="tel"
-                      />
-                      {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="w-full gold-gradient cta-glow text-accent-foreground py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg uppercase tracking-wide flex items-center justify-center gap-2.5 active:scale-[0.97] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {sending ? (
-                      <div className="w-5 h-5 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
-                    ) : (
-                      <Send size={20} />
-                    )}
-                    {sending ? "Odesílám…" : "Chci vyřídit hypotéku bezpečně pro rodinu →"}
-                  </button>
-
-                  <p className="text-center text-xs text-white/40 leading-relaxed">
-                    🔒 Vaše údaje jsou 100% v bezpečí. Ozvu se vám do 24 hodin s termínem hovoru.
-                  </p>
-
-                  <p className="text-center text-xs text-white/40 leading-relaxed">
-                    Odesláním souhlasíte se{" "}
-                    <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
-                      zpracováním osobních údajů
-                    </Link>{" "}
-                    za účelem vyřízení poptávky.
-                  </p>
-                </motion.form>
-              )}
-            </>
+              <p className="text-center text-xs text-white/40 leading-relaxed">
+                Odesláním souhlasíte se{" "}
+                <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
+                  zpracováním osobních údajů
+                </Link>{" "}
+                za účelem vyřízení poptávky.
+              </p>
+            </form>
           </motion.div>
         </div>
       </section>
