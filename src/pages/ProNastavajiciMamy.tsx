@@ -158,8 +158,7 @@ const ProNastavajiciMamy = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-heading font-black text-foreground leading-[1.15] mb-8 tracking-tight"
             >
-              Máte našetřeno přes 500 000 Kč. Čekáte miminko. A bojíte se, že vám banka schválí hypotéku, kterou pak
-              nezvládnete uživit.
+              Banka vám hypotéku spočítá ze dvou výplat. Vy ji budete splácet i s jednou.
             </motion.h1>
 
             <motion.p
@@ -168,8 +167,8 @@ const ProNastavajiciMamy = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed"
             >
-              Pomůžu vám vyřídit hypotéku tak, aby z vás rodičovská neudělala účetní, co počítá každou korunu — ne
-              tak, jak by ji ráda viděla banka.
+              Pomáhám budoucím mámám nastavit hypotéku na skutečný život s miminkem — ne na tabulku banky, která s
+              rodičovskou vůbec nepočítá. Abyste po porodu řešily miminko, ne to, jestli vám zbyde do výplaty.
             </motion.p>
 
             <motion.div
@@ -184,8 +183,8 @@ const ProNastavajiciMamy = () => {
                 Chci vyřídit hypotéku bezpečně pro rodinu →
               </button>
               <p className="mt-4 text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
-                Tohle není pro každého. Je to pro budoucí mámy, co mají už našetřeno přes 500 000 Kč a bydlení chtějí
-                řešit v příštích měsících — ne jen „se podívat, kolik by to bylo".
+                Tohle není pro každou. Je to pro budoucí mámy, které mají už našetřeno přes 500 000 Kč a bydlení
+                chtějí vyřešit v příštích měsících — ne jen „se podívat, kolik by to bylo".
               </p>
             </motion.div>
           </div>
@@ -219,8 +218,16 @@ const ProNastavajiciMamy = () => {
                 splátku a přemýšlíte, jestli vydržíte do výplaty.
               </p>
               <p>
+                A přesně tohle jste si nešetřily těch 500 000 Kč na účtu, abyste zažily. Ne to, aby se z vysněného
+                bytu najednou stal důvod počítat každou korunu u večeře.
+              </p>
+              <p>
                 Byla jste zvyklá mít svoje peníze. Rozhodovat se sama za sebe, ne podle toho, co zbyde po splátce.
-                Tohle vám nikdo neřekne dopředu — dokud to nezažijete na vlastní kůži.
+              </p>
+              <p>
+                A možná se bojíte i věci, o které se nahlas moc nemluví — že finance, které dnes nejsou problém, se
+                najednou stanou tím, o čem se s partnerem hádáte. Tohle vám nikdo neřekne dopředu — dokud to
+                nezažijete na vlastní kůži.
               </p>
             </div>
           </motion.div>
@@ -245,8 +252,8 @@ const ProNastavajiciMamy = () => {
               {[
                 {
                   n: "1",
-                  t: "Vyplníte krátký profil níže",
-                  d: "Pár otázek o vaší situaci — 2 minuty, žádné papírování.",
+                  t: "Vyplníte krátký kontaktní formulář",
+                  d: "Jméno, e-mail a telefon — necelou minutu, žádné papírování.",
                 },
                 {
                   n: "2",
@@ -284,10 +291,10 @@ const ProNastavajiciMamy = () => {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-black text-foreground mb-4">
-              Kam vám mám poslat termín na hovor?
+              Zjistíme, jak vypadá hypotéka, se kterou budete v klidu spát i na rodičovské.
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Nechte mi na sebe kontakt, ozvu se vám do 24 hodin s termínem 15minutového hovoru.
+              Vyplňte krátký formulář. Ozvu se vám do 24 hodin s termínem na nezávazný 15minutový hovor.
             </p>
           </motion.div>
 
@@ -393,6 +400,10 @@ const ProNastavajiciMamy = () => {
               <p className="font-bold">
                 Proto nedělám hypotéky „na maximum, co vám banka dá". Dělám je na to, co reálně přežijete i s jedním
                 platem a rodičákem na účtu.
+              </p>
+              <p>
+                Aby vaše rodičovská byla o miminku, procházkách a nedělních obědech s rodinou — ne o tabulce v
+                excelu.
               </p>
             </div>
           </motion.div>
