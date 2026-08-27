@@ -37,10 +37,12 @@ declare global {
 const ProNastavajiciMamy2 = () => {
   const navigate = useNavigate();
   const painRef = useRef(null);
+  const reassureRef = useRef(null);
   const processRef = useRef(null);
   const toolRef = useRef(null);
   const guaranteeRef = useRef(null);
   const painInView = useInView(painRef, { once: true, margin: "-100px" });
+  const reassureInView = useInView(reassureRef, { once: true, margin: "-100px" });
   const processInView = useInView(processRef, { once: true, margin: "-100px" });
   const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
   const guaranteeInView = useInView(guaranteeRef, { once: true, margin: "-100px" });
@@ -212,6 +214,39 @@ const ProNastavajiciMamy2 = () => {
                 rodičovská, nemoc nebo výpověď. Splátka zůstala stejná. Jejich klid ne.
               </p>
               <p className="text-foreground font-bold">Přesně tomuhle chci vaši rodinu ušetřit.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SEC 2B — Uklidnění a slib: mateřství má být klidné, ne o strachu z čísel */}
+      <section className="section-padding bg-secondary" ref={reassureRef}>
+        <div className="container-narrow mx-auto max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={reassureInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-heading font-black text-foreground mb-6 text-center">
+              Mateřství má být to nejhezčí období vašeho života. Ne to, kdy se bojíte otevřít bankovnictví.
+            </h2>
+            <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
+              <p>
+                Chci, abyste si tohle období užily naplno — bez propočtů u večeře, bez nočních úzkostí z výpisu z
+                účtu, bez pocitu, že jste na to samy.
+              </p>
+              <p>
+                Nejde o to najít nejlevnější hypotéku, jakou vám kdo nabídne. Jde o to najít tu, se kterou budete v
+                klidu spát i s jedním platem — a přesně tohle vám umím ukázat.
+              </p>
+              <p className="text-foreground font-bold">
+                Udělám z toho jednoduchý a srozumitelný plán. Žádná cizí slova, žádné drobné písmo, žádné otázky
+                bez odpovědi. Vy řešíte miminko. Čísla řeším já.
+              </p>
+              <p>
+                Nemusíte mi hned věřit na slovo. Stačí nechat mi na sebe kontakt — probereme vaši situaci, ukážu
+                vám přesně, jak by to mohlo vypadat u vás, a vy se pak sama rozhodnete, jestli to dává smysl.
+              </p>
             </div>
           </motion.div>
         </div>
