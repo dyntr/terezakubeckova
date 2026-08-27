@@ -141,17 +141,6 @@ const ProNastavajiciMamy2 = () => {
 
         <div className="container-narrow mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 w-full">
           <div className="max-w-2xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center justify-center gap-2 mb-6"
-            >
-              <span className="inline-block bg-accent/10 border-2 border-accent/30 text-accent px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
-                Jen pro budoucí mámy s vlastní rezervou
-              </span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
