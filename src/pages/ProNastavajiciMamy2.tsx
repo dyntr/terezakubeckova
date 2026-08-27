@@ -38,12 +38,10 @@ const ProNastavajiciMamy2 = () => {
   const navigate = useNavigate();
   const painRef = useRef(null);
   const reassureRef = useRef(null);
-  const processRef = useRef(null);
   const toolRef = useRef(null);
   const guaranteeRef = useRef(null);
   const painInView = useInView(painRef, { once: true, margin: "-100px" });
   const reassureInView = useInView(reassureRef, { once: true, margin: "-100px" });
-  const processInView = useInView(processRef, { once: true, margin: "-100px" });
   const toolInView = useInView(toolRef, { once: true, margin: "-100px" });
   const guaranteeInView = useInView(guaranteeRef, { once: true, margin: "-100px" });
 
@@ -230,53 +228,6 @@ const ProNastavajiciMamy2 = () => {
                 schválí banka.
               </p>
               <p className="text-foreground font-bold">Nemusíte mi věřit hned. Stačí nechat kontakt — a uvidíte sama.</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SEC 3 — Jak probíhá spolupráce */}
-      <section className="bg-primary py-16 md:py-20" ref={processRef}>
-        <div className="container-narrow mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={processInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-2xl sm:text-3xl font-heading font-black text-white mb-2 text-center">
-              Žádné spamování. Žádné zbytečné schůzky.
-            </h2>
-            <p className="text-primary-foreground/70 text-center mb-10 text-sm sm:text-base">
-              Tři kroky, žádné otravné telefonáty navíc.
-            </p>
-            <div className="space-y-6">
-              {[
-                {
-                  n: "1",
-                  t: "Necháte mi kontakt",
-                  d: "Jméno, e-mail, telefon. Necelá minuta, žádné papírování.",
-                },
-                {
-                  n: "2",
-                  t: "Zavolám vám na 15 minut",
-                  d: "Zjistím vaši reálnou situaci, ne jen kolik chcete půjčit.",
-                },
-                {
-                  n: "3",
-                  t: "Postavím plán na jeden plat",
-                  d: "S rezervou na rodičovskou, ne na dnešní dva platy.",
-                },
-              ].map((s) => (
-                <div key={s.n} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full gold-gradient flex items-center justify-center flex-shrink-0 font-black text-accent-foreground">
-                    {s.n}
-                  </div>
-                  <div>
-                    <p className="font-bold text-white text-base sm:text-lg">{s.t}</p>
-                    <p className="text-primary-foreground/70 text-sm sm:text-base">{s.d}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </motion.div>
         </div>
