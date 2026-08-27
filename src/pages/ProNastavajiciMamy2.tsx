@@ -306,10 +306,6 @@ const ProNastavajiciMamy2 = () => {
               </button>
 
               <p className="text-center text-xs text-muted-foreground leading-relaxed">
-                🔒 Vaše údaje jsou 100% v bezpečí.
-              </p>
-
-              <p className="text-center text-xs text-muted-foreground leading-relaxed">
                 Odesláním souhlasíte se{" "}
                 <Link to="/gdpr" className="text-accent hover:underline font-medium" target="_blank">
                   zpracováním osobních údajů
