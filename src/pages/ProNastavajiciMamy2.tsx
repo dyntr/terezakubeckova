@@ -148,7 +148,8 @@ const ProNastavajiciMamy2 = () => {
               className="flex items-center justify-center gap-2 mb-6"
             >
               <span className="inline-block bg-accent/10 border-2 border-accent/30 text-accent px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
-                Jak se v roce 2026 a 2027 pustit do projektu „vlastní bydlení“ s rozrůstající rodinou?
+                Jak se v roce 2026 a 2027 pustit do projektu „<strong className="font-black">vlastní bydlení</strong>“ s
+                rozrůstající rodinou?
               </span>
             </motion.div>
 
@@ -280,7 +281,8 @@ const ProNastavajiciMamy2 = () => {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-black text-foreground mb-4">
-              Zjistíme, jak vypadá vlastní bydlení, se kterým na mateřské nebudete počítat korunu.
+              Zjistíme, jak vypadá <span className="text-accent">vlastní bydlení</span>, se kterým na mateřské
+              nebudete počítat korunu.
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
               Vyplňte krátký formulář. Ozvu se vám do 24 hodin s termínem na nezávazný 15minutový hovor.
