@@ -173,8 +173,7 @@ const ProNastavajiciMamy2 = () => {
                 Nechci na mateřské počítat každou korunu
               </button>
               <p className="mt-4 text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
-                Tohle není pro každou. Je to pro budoucí mámy, které mají už našetřeno přes 500 000 Kč a bydlení pro
-                rostoucí rodinu chtějí vyřešit v příštích měsících — ne jen „se podívat, kolik by to bylo".
+                Tohle není pro každou. Je to pro budoucí mámy, které mají už našetřeno přes 500 000 Kč.
               </p>
             </motion.div>
           </div>
