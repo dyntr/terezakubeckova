@@ -149,7 +149,7 @@ const ProNastavajiciMamy2 = () => {
             >
               <span className="inline-block bg-accent/10 border-2 border-accent/30 text-accent px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
                 Jak se v roce 2026 a 2027 pustit do projektu „<strong className="font-black">vlastní bydlení</strong>“ s
-                rozrůstající rodinou?
+                rozrůstající se rodinou?
               </span>
             </motion.div>
 
