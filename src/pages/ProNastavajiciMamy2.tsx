@@ -158,17 +158,8 @@ const ProNastavajiciMamy2 = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-heading font-black text-foreground leading-[1.15] mb-8 tracking-tight"
             >
-              Jak se v roce 2026 a 2027 pustit do projektu „vlastní bydlení“ s rozrůstající rodinou?
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed"
-            >
               Mateřská ve svém, během které nebudete muset nikdy sáhnout po levnějších plenách.
-            </motion.p>
+            </motion.h1>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
