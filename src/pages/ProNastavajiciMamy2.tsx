@@ -247,7 +247,7 @@ const ProNastavajiciMamy2 = () => {
               Soustřeďte se na to, co je doopravdy důležité.
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Ozvu se vám do 24 hodin.
+              Vyplňte krátký formulář. Ozvu se vám do 24 hodin.
             </p>
           </motion.div>
 
