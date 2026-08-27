@@ -148,7 +148,7 @@ const ProNastavajiciMamy2 = () => {
               className="flex items-center justify-center gap-2 mb-6"
             >
               <span className="inline-block bg-accent/10 border-2 border-accent/30 text-accent px-4 py-1.5 rounded text-sm sm:text-base font-extrabold tracking-wider uppercase">
-                Jen pro budoucí mámy s vlastní rezervou
+                Jak se v roce 2026 a 2027 pustit do projektu „vlastní bydlení“ s rozrůstající rodinou?
               </span>
             </motion.div>
 
