@@ -15,6 +15,7 @@ import PotvrzeniEmail from "./pages/PotvrzeniEmail";
 import StresTest from "./pages/StresTest";
 import StresTestDekujeme from "./pages/StresTestDekujeme";
 import ProNastavajiciMamy from "./pages/ProNastavajiciMamy";
+import ProNastavajiciMamy2 from "./pages/ProNastavajiciMamy2";
 import ProNastavajiciMamyDekujeme from "./pages/ProNastavajiciMamyDekujeme";
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/stres-test" element={<StresTest />} />
           <Route path="/stres-test-dekujeme" element={<StresTestDekujeme />} />
           <Route path="/pro-nastavajici-mamy" element={<ProNastavajiciMamy />} />
+          <Route path="/pro-nastavajici-mamy-2" element={<ProNastavajiciMamy2 />} />
           <Route path="/pro-nastavajici-mamy-dekujeme" element={<ProNastavajiciMamyDekujeme />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
