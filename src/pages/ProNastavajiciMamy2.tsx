@@ -190,35 +190,28 @@ const ProNastavajiciMamy2 = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="text-sm font-bold text-accent tracking-wider uppercase mb-6 text-center">
-              Dva platy dnes. Jeden plat a rodičák za pár měsíců.
+              Proč mi na tom tak záleží
             </p>
             <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
               <p>
-                Dnes vyděláváte se svým partnerem <span className="text-foreground font-bold">90 000 Kč</span> měsíčně.
-                Byt vypadá dosažitelně. Banka se na vás usměje a schválí přesně to, o co si řeknete.
+                V roce 2020 jsem ze dne na den přišla o práci. Jeden telefonát a příjem, se kterým jsem dlouhodobě
+                počítala, byl pryč.
               </p>
-              <p className="text-foreground font-bold">Jenže do té tabulky nikdy nezadá jedno slovo: rodičovská.</p>
-              <p>
-                Za pár měsíců zůstane na účtu jeden plat a k němu rodičovský příspěvek. Splátka{" "}
-                <span className="text-foreground font-bold">30 000 Kč</span> ale zůstává stejná. Pořád, každý měsíc, bez
-                výjimky.
+              <p className="text-foreground font-bold">
+                Seděla jsem nad výpisem z účtu a počítala, kolik měsíců vydržím, než seženu něco nového.
               </p>
               <p>
-                Zbyde vám plyn, elektřina, pleny — a ten pátek večer, kdy otevřete bankovnictví, uvidíte odečtenou
-                splátku a přemýšlíte, jestli vydržíte do výplaty.
+                Přesně tenhle pocit teď možná řešíte i vy. Jen u vás to nebude výpověď — bude to rodičovská.
               </p>
               <p>
-                A možná budete první, kdo v obchodě sáhne po levnějším balení plen, levnějším jídle, levnější
-                každodennosti — jen proto, že bydlení se plánovalo na dnešek, ne na mateřskou.
+                Právě tahle zkušenost mě přivedla do světa financí. A od té doby dělám všechno pro to, aby moji
+                klienti nikdy nemuseli sedět nad výpisem z účtu tak, jako jsem kdysi seděla já.
               </p>
               <p>
-                Byla jste zvyklá mít svoje peníze. Rozhodovat se sama za sebe, ne podle toho, co zbyde po splátce.
+                Za ty roky jsem viděla desítky párů, které si vzaly hypotéku na dva plné platy — a pak přišla
+                rodičovská, nemoc nebo výpověď. Splátka zůstala stejná. Jejich klid ne.
               </p>
-              <p>
-                A možná se bojíte i věci, o které se nahlas moc nemluví — že finance, které dnes nejsou problém, se
-                najednou stanou tím, o čem se s partnerem hádáte. Tohle vám nikdo neřekne dopředu — dokud to
-                nezažijete na vlastní kůži.
-              </p>
+              <p className="text-foreground font-bold">Přesně tomuhle chci vaši rodinu ušetřit.</p>
             </div>
           </motion.div>
         </div>
