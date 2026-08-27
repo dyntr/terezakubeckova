@@ -192,28 +192,20 @@ const ProNastavajiciMamy2 = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="text-sm font-bold text-accent tracking-wider uppercase mb-6 text-center">
-              Proč mi na tom tak záleží
+              Tohle vám banka neřekne
             </p>
+            <h2 className="text-2xl sm:text-3xl font-heading font-black text-foreground mb-6 text-center">
+              Hypotéku na dva platy vám schválí každý. Přežít na jeden už musíte sama.
+            </h2>
             <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
-              <p>
-                V roce 2020 jsem ze dne na den přišla o práci. Jeden telefonát a příjem, se kterým jsem dlouhodobě
-                počítala, byl pryč.
-              </p>
+              <p>Dnes vyděláváte spolu. Za pár měsíců vydělává jen jeden z vás.</p>
               <p className="text-foreground font-bold">
-                Seděla jsem nad výpisem z účtu a počítala, kolik měsíců vydržím, než seženu něco nového.
+                Splátka to neví. Splátka zůstává stejná — každý měsíc, bez výjimky.
               </p>
-              <p>
-                Přesně tenhle pocit teď možná řešíte i vy. Jen u vás to nebude výpověď — bude to rodičovská.
+              <p>A tak si najednou hlídáte každou korunu. Levnější pleny. Levnější jídlo. Levnější všechno.</p>
+              <p className="text-foreground font-bold">
+                Přesně tohle vám žádná banka nikdy neřekne dopředu.
               </p>
-              <p>
-                Právě tahle zkušenost mě přivedla do světa financí. A od té doby dělám všechno pro to, aby moji
-                klienti nikdy nemuseli sedět nad výpisem z účtu tak, jako jsem kdysi seděla já.
-              </p>
-              <p>
-                Za ty roky jsem viděla desítky párů, které si vzaly hypotéku na dva plné platy — a pak přišla
-                rodičovská, nemoc nebo výpověď. Splátka zůstala stejná. Jejich klid ne.
-              </p>
-              <p className="text-foreground font-bold">Přesně tomuhle chci vaši rodinu ušetřit.</p>
             </div>
           </motion.div>
         </div>
@@ -231,22 +223,13 @@ const ProNastavajiciMamy2 = () => {
               Mateřství má být to nejhezčí období vašeho života. Ne to, kdy se bojíte otevřít bankovnictví.
             </h2>
             <div className="space-y-5 text-muted-foreground text-base sm:text-lg leading-relaxed">
+              <p className="text-foreground font-bold">Vy budete řešit miminko. Čísla budu řešit já.</p>
+              <p>Žádná cizí slova. Žádné drobné písmo. Žádné otázky bez odpovědi.</p>
               <p>
-                Chci, abyste si tohle období užily naplno — bez propočtů u večeře, bez nočních úzkostí z výpisu z
-                účtu, bez pocitu, že jste na to samy.
+                Postavím vám hypotéku, se kterou budete v klidu spát i s jedním platem — ne jen s tím, co vám dnes
+                schválí banka.
               </p>
-              <p>
-                Nejde o to najít nejlevnější hypotéku, jakou vám kdo nabídne. Jde o to najít tu, se kterou budete v
-                klidu spát i s jedním platem — a přesně tohle vám umím ukázat.
-              </p>
-              <p className="text-foreground font-bold">
-                Udělám z toho jednoduchý a srozumitelný plán. Žádná cizí slova, žádné drobné písmo, žádné otázky
-                bez odpovědi. Vy řešíte miminko. Čísla řeším já.
-              </p>
-              <p>
-                Nemusíte mi hned věřit na slovo. Stačí nechat mi na sebe kontakt — probereme vaši situaci, ukážu
-                vám přesně, jak by to mohlo vypadat u vás, a vy se pak sama rozhodnete, jestli to dává smysl.
-              </p>
+              <p className="text-foreground font-bold">Nemusíte mi věřit hned. Stačí nechat kontakt — a uvidíte sama.</p>
             </div>
           </motion.div>
         </div>
@@ -270,17 +253,17 @@ const ProNastavajiciMamy2 = () => {
               {[
                 {
                   n: "1",
-                  t: "Vyplníte krátký kontaktní formulář",
-                  d: "Jméno, e-mail a telefon — necelou minutu, žádné papírování.",
+                  t: "Necháte mi kontakt",
+                  d: "Jméno, e-mail, telefon. Necelá minuta, žádné papírování.",
                 },
                 {
                   n: "2",
-                  t: "Zavolám vám na 15minutový hovor",
+                  t: "Zavolám vám na 15 minut",
                   d: "Zjistím vaši reálnou situaci, ne jen kolik chcete půjčit.",
                 },
                 {
                   n: "3",
-                  t: "Připravím kompletní plán a vyřídím hypotéku",
+                  t: "Postavím plán na jeden plat",
                   d: "S rezervou na rodičovskou, ne na dnešní dva platy.",
                 },
               ].map((s) => (
