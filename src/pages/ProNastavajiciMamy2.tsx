@@ -306,7 +306,7 @@ const ProNastavajiciMamy2 = () => {
               </button>
 
               <p className="text-center text-xs text-muted-foreground leading-relaxed">
-                🔒 Vaše údaje jsou 100% v bezpečí. Ozvu se vám do 24 hodin s termínem hovoru.
+                🔒 Vaše údaje jsou 100% v bezpečí.
               </p>
 
               <p className="text-center text-xs text-muted-foreground leading-relaxed">
