@@ -244,11 +244,10 @@ const ProNastavajiciMamy2 = () => {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-black text-foreground mb-4">
-              Zjistíme, jak vypadá <span className="text-accent">vlastní bydlení</span>, se kterým na mateřské
-              nebudete počítat korunu.
+              Soustřeďte se na to, co je doopravdy důležité.
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-              Vyplňte krátký formulář. Ozvu se vám do 24 hodin s termínem na nezávazný 15minutový hovor.
+              Ozvu se vám do 24 hodin.
             </p>
           </motion.div>
 
@@ -303,7 +302,7 @@ const ProNastavajiciMamy2 = () => {
                 ) : (
                   <Send size={20} />
                 )}
-                {sending ? "Odesílám…" : "Nechci na mateřské počítat každou korunu"}
+                {sending ? "Odesílám…" : "Odeslat, chci svobodnou mateřskou"}
               </button>
 
               <p className="text-center text-xs text-muted-foreground leading-relaxed">
